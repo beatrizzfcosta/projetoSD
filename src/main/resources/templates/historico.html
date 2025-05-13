@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:replace="components/header :: title">Histórico - Classic Cars</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/css/historico-style.css" />
+</head>
+
+<body>
+<!-- Navbar -->
+<div th:replace="components/header :: header"></div>
+
+<div class="history-container">
+    <div class="title-container">
+        <h2>Meu Histórico</h2>
+    </div>
+
+    <div class="history-filters">
+        <select class="filter-select">
+            <option value="">Todos os Status</option>
+            <option value="completed">Concluídos</option>
+            <option value="pending">Pendentes</option>
+        </select>
+        <select class="filter-select">
+            <option value="">Todos os Anos</option>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+        </select>
+    </div>
+
+    <!-- Item 1 -->
+    <div class="history-item">
+        <div class="history-item-header">
+            <span>Pedido #12345</span>
+            <span>
+                    <span class="status-badge status-completed">Concluído</span>
+                    <span class="arrow">&#9654;</span>
+                </span>
+        </div>
+        <div class="history-item-content">
+            <img src="images/YELLOW.png" alt="Porsche 911" class="history-item-image">
+            <div class="history-item-details">
+                <h3>Porsche 911 (1964)</h3>
+                <p><strong>Data da Compra:</strong> 15/03/2024</p>
+                <p><strong>Data de Pagamento:</strong> 16/03/2024</p>
+                <p><strong>Valor:</strong> €230.000</p>
+                <p><strong>Status:</strong> Entregue</p>
+                <p><strong>Fatura:</strong> <a href="#">Visualizar PDF</a></p>
+                <p><strong>Detalhes:</strong> Carro em excelente estado, com todas as revisões em dia.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Item 2 -->
+    <div class="history-item">
+        <div class="history-item-header">
+            <span>Pedido #12344</span>
+            <span>
+                    <span class="status-badge status-pending">Em Processamento</span>
+                    <span class="arrow">&#9654;</span>
+                </span>
+        </div>
+        <div class="history-item-content">
+            <img src="images/RED.png" alt="BMW M3" class="history-item-image">
+            <div class="history-item-details">
+                <h3>BMW M3 (1986)</h3>
+                <p><strong>Data da Compra:</strong> 10/03/2024</p>
+                <p><strong>Data de Pagamento:</strong> 12/03/2024</p>
+                <p><strong>Valor:</strong> €180.000</p>
+                <p><strong>Status:</strong> Em preparação para entrega</p>
+                <p><strong>Fatura:</strong> <a href="#">Visualizar PDF</a></p>
+                <p><strong>Detalhes:</strong> Carro em processo de finalização de documentação.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div th:replace="components/footer :: footer"></div>
+
+<script src="/js/script.js"></script>
+<div th:replace="components/header :: header-script"></div>
+<script>
+    // Acordeon para histórico
+    document.querySelectorAll('.history-item-header').forEach(header => {
+        header.addEventListener('click', function() {
+            const item = this.closest('.history-item');
+            item.classList.toggle('open');
+        });
+    });
+</script>
+</body>
+
+</html>

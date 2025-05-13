@@ -1,0 +1,31 @@
+<!-- comprar.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Compre Agora</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<header>
+    <h1>Loja</h1>
+    <nav>
+        <a href="/">Início</a>
+        <a href="/comprar" class="active">Comprar</a>
+        <a href="/sobre">Sobre Nós</a>
+    </nav>
+</header>
+
+<section class="lista-produtos">
+    <h2>Todos os Produtos</h2>
+    <div class="produtos">
+        <div class="produto">
+            <img src="/images/produto1.jpg" alt="Produto 1">
+            <h4>Produto 1</h4>
+            <p>Descrição do produto.</p>
+            <button>Comprar</button>
+        </div>
+        <!-- Mais produtos -->
+    </div>
+</section>
+</body>
+</html>
