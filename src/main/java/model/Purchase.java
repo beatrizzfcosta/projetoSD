@@ -1,21 +1,34 @@
 package model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "purchases")
+@Table(name = "Purchases")
 public class Purchase {
 
     @Id
-    private Long purchId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer purchaseId;
 
-    public void setPurchId(Long pId) {
-        this.purchId = purchId;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+
+    public Purchase() {}
+
+    public User getUser() {
+        return user;
     }
 
-    public Long getPurchId() {
-        return purchId;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Integer getPurchaseId() {
+        return purchaseId;
+    }
+
+    public void setPurchaseId(Integer purchaseId) {
+        this.purchaseId = purchaseId;
     }
 }

@@ -1,25 +1,33 @@
 package model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "Roles")
 public class Role {
 
     @Id
-    private Long rId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer roleId;
 
-    @Transient
-    private boolean isLogged;
+    @Column(nullable = false)
+    private String nome;
 
-    public void setrId(Long rId) {
-        this.rId = rId;
+    public Role() {}
+
+    public Integer getRoleId() {
+        return roleId;
     }
 
-    public Long getrId() {
-        return rId;
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 }
