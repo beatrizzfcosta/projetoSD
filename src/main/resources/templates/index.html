@@ -1,26 +1,157 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <title>Loja de Carros Clássicos</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}" />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto&display=swap" rel="stylesheet">
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
 
+<head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title th:replace="components/header :: title">Classic Cars</title>
+      <link rel="stylesheet" href="/css/style.css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+
 <body>
-<header class="header slide-top">
-  <div class="header-container">
-    <div class="logo">
-      <span class="logo-text">Clássicos<span class="highlight">Rodas</span></span>
-    </div>
-    <nav class="nav">
-      <a href="/" class="nav-link active">Início</a>
-      <a href="/comprar" class="nav-link">Comprar</a>
-      <a href="/sobre" class="nav-link">Sobre Nós</a>
-    </nav>
-  </div>
-</header>
-<main class="hero-container">
-  <img src="/images/car.png" alt="Carro clássico" class="carro slide-left" />
+<!-- Navbar -->
+<div th:replace="components/header :: header"></div>
+
+<!-- Carrossel -->
+<section class="carousel-container">
+      <div class="carousel">
+            <div class="carousel-inner">
+                  <div class="carousel-items">
+                        <div class="carousel-item">
+                              <img src="images/YELLOW.png" alt="Carro Amarelo">
+                        </div>
+                        <div class="carousel-item">
+                              <img src="images/RED.png" alt="Carro Vermelho">
+                        </div>
+                        <div class="carousel-item">
+                              <img src="images/WHITE.png" alt="Carro Branco">
+                        </div>
+                        <div class="carousel-item">
+                              <img src="images/BEIGE.png" alt="Carro Bege">
+                        </div>
+                  </div>
+
+                  <div class="carousel-indicators" id="carouselIndicators">
+                        <div class="indicator" data-index="0"></div>
+                        <div class="indicator" data-index="1"></div>
+                        <div class="indicator" data-index="2"></div>
+                        <div class="indicator" data-index="3"></div>
+                  </div>
+            </div>
+      </div>
+</section>
+
+<!-- Info Container -->
+<div th:replace="components/info-container :: info-container"></div>
+
+<section class="search-filters">
+      <div class="search-container">
+            <div class="search-bar">
+                  <input type="text" placeholder="Pesquisar carros...">
+                  <button><i class="fas fa-search"></i></button>
+            </div>
+
+            <div class="filters-container">
+                  <div class="filter-group">
+                        <label>Preço</label>
+                        <select>
+                              <option value="">Todos os preços</option>
+                              <option value="0-50000">Até €50.000</option>
+                              <option value="50000-100000">€50.000 - €100.000</option>
+                              <option value="100000-200000">€100.000 - €200.000</option>
+                              <option value="200000+">Acima de €200.000</option>
+                        </select>
+                  </div>
+
+                  <div class="filter-group">
+                        <label>Ano</label>
+                        <select>
+                              <option value="">Todos os anos</option>
+                              <option value="1950-1960">1950 - 1960</option>
+                              <option value="1960-1970">1960 - 1970</option>
+                              <option value="1970-1980">1970 - 1980</option>
+                              <option value="1980-1990">1980 - 1990</option>
+                              <option value="1990+">1990+</option>
+                        </select>
+                  </div>
+
+                  <div class="filter-group">
+                        <label>Marca</label>
+                        <select>
+                              <option value="">Todas as marcas</option>
+                              <option value="audi">Audi</option>
+                              <option value="bmw">BMW</option>
+                              <option value="mercedes">Mercedes</option>
+                              <option value="porsche">Porsche</option>
+                              <option value="toyota">Toyota</option>
+                              <option value="volkswagen">Volkswagen</option>
+                        </select>
+                  </div>
+
+                  <div class="filter-group">
+                        <label>Transmissão</label>
+                        <select>
+                              <option value="">Todas</option>
+                              <option value="manual">Manual</option>
+                              <option value="automatico">Automático</option>
+                        </select>
+                  </div>
+            </div>
+      </div>
+</section>
+
+<main>
+      <section class="brand-cards">
+            <h2>Nossas Marcas</h2>
+            <div class="cards-container">
+                  <div class="brand-card">
+                        <img src="images/audi.png" alt="Audi">
+                        <h3>Audi</h3>
+                  </div>
+                  <div class="brand-card">
+                        <img src="images/bmw.png" alt="BMW">
+                        <h3>BMW</h3>
+                  </div>
+                  <div class="brand-card">
+                        <img src="images/mercedes.png" alt="Mercedes">
+                        <h3>Mercedes</h3>
+                  </div>
+                  <div class="brand-card">
+                        <img src="images/porshe.png" alt="Porsche">
+                        <h3>Porsche</h3>
+                  </div>
+                  <div class="brand-card">
+                        <img src="images/Toyota.png" alt="Toyota">
+                        <h3>Toyota</h3>
+                  </div>
+                  <div class="brand-card">
+                        <img src="images/Volkswagen.png" alt="Volkswagen">
+                        <h3>Volkswagen</h3>
+                  </div>
+            </div>
+      </section>
+
+      <section class="transmission-cards">
+            <h2>Tipos de Transmissão</h2>
+            <div class="cards-container">
+                  <div class="transmission-card">
+                        <img src="images/1.png" alt="Transmissão Manual">
+                        <h3>Manual</h3>
+                  </div>
+                  <div class="transmission-card">
+                        <img src="images/2.png" alt="Transmissão Automática">
+                        <h3>Automática</h3>
+                  </div>
+            </div>
+      </section>
 </main>
+
+<!-- Footer -->
+<div th:replace="components/footer :: footer"></div>
+
+<script src="/js/script.js"></script>
+<div th:replace="components/header :: header-script"></div>
 </body>
+
 </html>

@@ -1,34 +1,36 @@
 package com.example.projetosd;
 
+import jakarta.annotation.PostConstruct;
+import com.example.projetosd.model.Color;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.stereotype.Component;
+import com.example.projetosd.repository.ColorRepository;
+
+import java.util.List;
 
 
 @SpringBootApplication
 public class ProjetoSdApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(ProjetoSdApplication.class, args);
     }
-
-    @GetMapping("/")
-    public String home() {
-        return "index"; // Procura pelo arquivo templates/index.html
-    }
-
-    @GetMapping("/comprar")
-    public String mostrarPaginaComprar() {
-        return "comprar"; // Renderiza templates/comprar.html
-    }
-
-    @GetMapping("/sobre")
-    public String mostrarSobreNos() {
-        return "sobre"; // Renderiza templates/sobre.html
-    }
-
 }
 
+@Component
+class ColorViewer {
 
+    private final ColorRepository colorRepository;
+
+    public ColorViewer(ColorRepository colorRepository) {
+        this.colorRepository = colorRepository;
+    }
+
+    @PostConstruct
+    public void init() {
+        List<Color> cores = colorRepository.findAll();
+        System.out.println("Cores na tabela:");
+        cores.forEach(cor -> System.out.println("ID: " + cor.getColorId() + ", Nome: " + cor.getColorName()));
+    }
+}
 

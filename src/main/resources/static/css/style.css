@@ -1,194 +1,603 @@
-body {
+/* Estilos gerais */
+* {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #111;
-    color: #fff;
-    overflow-x: hidden;
+    padding: 0;
+    box-sizing: border-box;
+
 }
 
-header {
-    background-color: #000;
-    color: #fff;
-    padding: 1em;
-    text-align: center;
-    position: fixed;
-    width: 100%;
-    top: -100px;
-    z-index: 100;
-    animation: slideDown 1s ease-out forwards;
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f5f5f5;
 }
 
-nav a {
-    color: #c6a97f;
-    margin: 0 15px;
-    text-decoration: none;
-}
-
-.hero-container {
-    margin-top: 150px;
-    text-align: center;
-    overflow: visible;
-    height: 500px;
-}
-
-.carro {
-    width: 90%;
-    max-width: 1100px;
-    opacity: 0;
-    transform: translateX(20%);
-    animation: slideInLeft 1s ease-out 0.5s forwards;
-    position: relative;
-    z-index: 2;
-}
-
-.tag-label {
-    position: relative;
-    width: 120px;
-    height: 180px;
-    background: #e53935;
-    border-radius: 10px 10px 10px 10px;
-    transform: rotate(15deg);
-    margin: 50px;
-    clip-path: polygon(20% 0%, 80% 0%, 100% 15%, 100% 100%, 0% 100%, 0% 15%);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-}
-
-.tag-label::before {
-    content: "";
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 12px;
-    height: 12px;
-    background: #fff;
-    border: 3px solid #666;
-    border-radius: 50%;
-    z-index: 2;
-}
-
-.tag-label::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 60px;
-    width: 2px;
-    background: #333;
-    z-index: 1;
-}
-
-.tag-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-15deg);
+/* Navbar */
+.navbar {
     color: white;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 24px;
-    text-align: center;
-}
-
-.welcome-box.behind-car {
-    z-index: 1;
-}
-
-
-/* Animações */
-@keyframes slideInLeft {
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes slideInRight {
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes fadeSlideIn {
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes slideDown {
-    to {
-        top: 0;
-    }
-}
-
-.header {
-    background-color: #0d0d0d;
-    color: #fff;
-    position: fixed;
-    width: 100%;
-    top: -100px;
-    z-index: 100;
-    padding: 0.5em 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
-    animation: slideDown 1s ease-out forwards;
-}
-
-.header-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2em;
+    padding: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.logo-text {
-    font-size: 1.8rem;
-    font-weight: bold;
-    font-family: 'Bebas Neue', sans-serif;
-    letter-spacing: 2px;
-    color: #fff;
-}
-
-.highlight {
-    color: #c6a97f;
-    margin-left: 4px;
-}
-
-.nav {
-    display: flex;
-    gap: 1.5em;
-}
-
-.nav-link {
-    color: #c6a97f;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 1.1rem;
-    position: relative;
-    transition: color 0.3s;
-}
-
-.nav-link::after {
-    content: "";
-    position: absolute;
-    width: 0%;
-    height: 2px;
-    background-color: #c6a97f;
-    bottom: -4px;
+    position: fixed;
+    top: 0;
     left: 0;
-    transition: width 0.3s;
+    right: 0;
+    z-index: 99999;
+    background-color: transparent;
+    transition: all 0.5s ease-in-out;
+    height: 50px;
+    margin-top: 10px;
+    pointer-events: auto;
 }
 
-.nav-link:hover {
-    color: #fff;
+.navbar.scrolled {
+    background-color: black;
+    margin-top: 0;
+    height: 60px;
+    z-index: 99999;
+    pointer-events: auto;
 }
 
-.nav-link:hover::after {
+.navbar.scrolled .logo,
+.navbar.scrolled .nav-links a {
+    color: white;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-left: 100px;
+    color: black;
+    position: relative;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    align-items: center;
+    margin-right: 100px;
+    color: black;
+}
+
+.nav-links a {
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: -8px;
+    left: 0;
+    background-color: currentColor;
+    transition: width 0.3s ease-in-out;
+}
+
+.nav-links a:hover::after {
     width: 100%;
 }
 
-.nav-link.active {
+.nav-links i {
+    font-size: 1.2rem;
+}
+
+.nav-links .dropdown {
+    position: relative;
+}
+
+.nav-links .dropdown::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 10px; /* Espaço invisível para interação */
+}
+
+.nav-links .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px); /* Ajustando a posição para considerar o espaço */
+    right: 0;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    padding: 8px 0;
+    z-index: 1000;
+    color: black;
+    padding: 10px;
+}
+
+.nav-links .dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.nav-links .dropdown-menu li {
+    list-style: none;
+}
+
+.nav-links .dropdown-menu a {
+    color: black;
+    padding: 8px 16px;
+    display: block;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.nav-links .dropdown-menu a:hover {
+    background-color: #f5f5f5;
+}
+
+/* Removendo a seta do dropdown */
+.nav-links .dropdown-toggle::after {
+    display: none;
+}
+
+/* Carrossel */
+.carousel-container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.carousel {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    z-index: 1;
+}
+
+.carousel-inner {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+}
+
+.carousel-items {
+    display: flex;
+    width: 400%; /* 4 slides */
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+    width: 25%; /* Alterado para 25% já que temos 4 slides */
+    flex-shrink: 0;
+    height: 100%;
+    position: relative;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center; /* This will align the image to the left */
+}
+
+.carousel-indicators {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 2;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.indicator.active {
+    background: white;
+}
+
+/* Removendo as transições manuais anteriores */
+input[type="radio"] {
+    display: none;
+}
+
+/* Adicionando classes para controle dos indicadores */
+.carousel-items[data-slide="1"] ~ .carousel-indicators .indicator:nth-child(1),
+.carousel-items[data-slide="2"] ~ .carousel-indicators .indicator:nth-child(2),
+.carousel-items[data-slide="4"] ~ .carousel-indicators .indicator:nth-child(4) {
+    background: white;
+}
+
+.carousel-items[data-slide="3"] ~ .carousel-indicators .indicator:nth-child(3) {
+    background: #333333;
+}
+
+/* Carros em destaque */
+.carros-header {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    overflow-x: auto;
+}
+
+.carros-header img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Caixa de informações da loja */
+.store-info {
+    background-color: black;
+    padding: 3rem;
+    width: 100%;
+    max-width: 1200px;
+    min-height: 200px;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
+    position: relative;
+    margin: -100px auto 3rem auto;
+    z-index: 1;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    left: 0;
+    right: 0;
+}
+
+
+.car-info-block {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     color: #fff;
+    padding: 0 2rem;
+    position: relative;
+    width: 150px;
+}
+
+.separator {
+    width: 2px;
+    background-color: #3a4656;
+    height: 60px; /
+}
+
+.car-info-title {
+    font-size: 0.8rem;
+    color: #b0b8c1;
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+}
+
+.car-info-value {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    white-space: nowrap;
+}
+
+.brand-cards {
+    margin-top: 20px;
+
+    background-color: #f5f5f5;
+    width: 100%;
+}
+
+.brand-cards h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #333;
+    font-size: 2rem;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.brand-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.brand-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.brand-card img {
+    width: 100%;
+    height: 120px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+}
+
+.brand-card h3 {
+    margin-top: 1rem;
+    text-align: center;
+    color: #333;
+}
+
+/* Transmission Cards Styles */
+.transmission-cards {
+    margin-top: 3rem;
+    background-color: #f5f5f5;
+    width: 100%;
+}
+
+.transmission-cards h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #333;
+    font-size: 2rem;
+}
+
+.transmission-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.transmission-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.transmission-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+}
+
+.transmission-card h3 {
+    margin-top: 1rem;
+    text-align: center;
+    color: #333;
+}
+
+/* Search Filters Styles */
+.search-filters {
+    background-color: #f5f5f5;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+}
+
+.search-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.search-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-bar input:focus {
+    border-color: #333;
+}
+
+.search-bar button {
+    padding: 1rem 2rem;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+    background-color: #000;
+}
+
+.filters-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+}
+
+.filter-group label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.filter-group select {
+    padding: 0.8rem 1rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: white;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+    padding-right: 2.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.filter-group select:hover {
+    border-color: #999;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filter-group select:focus {
+    border-color: #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.filter-group select option {
+    padding: 1rem;
+    background-color: white;
+    color: #333;
+}
+
+.filter-group select option:hover {
+    background-color: #f5f5f5;
+}
+
+.filter-group select option:checked {
+    background-color: #333;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .cards-container {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+
+    .brand-card {
+        padding: 1rem;
+    }
+
+    .brand-card img {
+        height: 100px;
+    }
+}
+
+/* Footer Styles */
+.footer {
+    background-color: black;
+    color: #fff;
+    padding: 4rem 0 0 0;
+    margin-top: 4rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+}
+
+.footer-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.footer-section h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.footer-section p {
+    color: #b3b3b3;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.footer-section i {
+    margin-right: 0.5rem;
+    color: #fff;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.social-links a {
+    color: #fff;
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #b3b3b3;
+}
+
+.footer-bottom {
+    margin-top: 3rem;
+    padding: 1.5rem 0;
+    text-align: center;
+    border-top: 1px solid #333;
+    background-color: #f5f5f5;
+}
+
+.footer-bottom p {
+    color: black;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
 }

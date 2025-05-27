@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<footer th:fragment="footer" class="footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <h3>Classic Cars</h3>
+      <p>Especialistas em carros clássicos desde 1990</p>
+    </div>
+
+    <div class="footer-section">
+      <h4>Contacto</h4>
+      <p><i class="fas fa-phone"></i> +351 123 456 789</p>
+      <p><i class="fas fa-envelope"></i> info@classiccars.pt</p>
+      <p><i class="fas fa-map-marker-alt"></i> Rua dos Clássicos, 123</p>
+      <p>Lisboa, Portugal</p>
+    </div>
+
+    <div class="footer-section">
+      <h4>Horário</h4>
+      <p>Segunda - Sexta: 9h - 18h</p>
+      <p>Sábado: 10h - 16h</p>
+      <p>Domingo: Fechado</p>
+    </div>
+
+    <div class="footer-section">
+      <h4>Redes Sociais</h4>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 Classic Cars. Todos os direitos reservados.</p>
+  </div>
+</footer>
+</body>
+</html>
+header
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  Expandir
+  message.txt
+  4 KB
+  info container
+
+
+  <!DOCTYPE html>
+  <html xmlns:th="http://www.thymeleaf.org">
+  <body>
+  <section th:fragment="info-container" class="store-info">
+    <div class="car-info-block">
+      <span class="car-info-title">Marca</span>
+      <span class="car-info-value" th:text="${marca ?: 'Porsche 911'}">Porsche 911</span>
+    </div>
+    <div class="separator"></div>
+    <div class="car-info-block">
+      <span class="car-info-title">Ano</span>
+      <span class="car-info-value" th:text="${ano ?: '1964'}">1964</span>
+    </div>
+    <div class="separator"></div>
+    <div class="car-info-block">
+      <span class="car-info-title">KMs</span>
+      <span class="car-info-value" th:text="${kms ?: '250.000'}">250.000</span>
+    </div>
+    <div class="separator"></div>
+    <div class="car-info-block">
+      <span class="car-info-title">Caixa</span>
+      <span class="car-info-value" th:text="${caixa ?: 'Manual'}">Manual</span>
+    </div>
+    <div class="separator"></div>
+    <div class="car-info-block">
+      <span class="car-info-title">Cor</span>
+      <span class="car-info-value" th:text="${cor ?: 'Amarelo'}">Amarelo</span>
+    </div>
+    <div class="separator"></div>
+    <div class="car-info-block">
+      <span class="car-info-title">Valor</span>
+      <span class="car-info-value" th:text="${valor ?: '€230.000'}">€230.000</span>
+    </div>
+  </section>
+  </body>
+  </html>
