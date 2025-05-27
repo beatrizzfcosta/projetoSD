@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 public class UserSession {
 
     @Id
+    @Column(name = "userId")
     private Integer userId;
 
     @OneToOne

@@ -8,18 +8,20 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userId", nullable = false)
     private Integer userId;
 
     @ManyToOne
     @JoinColumn(name = "roleId")
     private Role role;
 
-    @Column(nullable = false)
+    @Column(name = "nome", nullable = false)
     private String nome;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "mail", nullable = false, unique = true)
     private String mail;
 
+    @Column(name = "infoAdicional")
     private String infoAdicional;
 
     public User() {}

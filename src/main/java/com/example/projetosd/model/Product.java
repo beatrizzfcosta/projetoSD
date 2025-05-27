@@ -12,15 +12,19 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer prodId;
 
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "description", nullable = false)
     private String description;
 
+    @Column(name = "imageURL", nullable = false)
     private String imageURL;
 
+    @Column(name = "doorCount", nullable = false)
     private Integer doorCount;
 
+    @Column(name = "price", nullable = false)
     private BigDecimal price;
 
     @ManyToOne

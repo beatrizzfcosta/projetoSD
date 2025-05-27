@@ -8,9 +8,10 @@ public class Type {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "typeId", nullable = false)
     private Integer typeId;
 
-    @Column(nullable = false)
+    @Column(name = "typeName", nullable = false)
     private String typeName;
 
     public Type() {}

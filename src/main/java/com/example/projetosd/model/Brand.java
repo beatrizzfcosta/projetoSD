@@ -8,9 +8,10 @@ public class Brand {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "brandId")
     private Integer brandId;
 
-    @Column(nullable = false)
+    @Column(name = "brandName", nullable = false)
     private String brandName;
 
     public Brand() {}

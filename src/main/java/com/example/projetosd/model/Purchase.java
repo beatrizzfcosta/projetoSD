@@ -8,6 +8,7 @@ public class Purchase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "purchaseId", nullable = false)
     private Integer purchaseId;
 
     @ManyToOne
