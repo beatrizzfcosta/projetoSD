@@ -91,7 +91,7 @@ CREATE TABLE brands (
     brandName VARCHAR(255) NOT NULL
 );
 
-INSERT INTO colors (colorName) VALUES
+INSERT INTO brands (brandName) VALUES
     ('audi'),
     ('bmw'),
     ('mercedes'),
