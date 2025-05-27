@@ -50,6 +50,7 @@ CREATE TABLE Purchases (
     FOREIGN KEY (userId) REFERENCES Users(userId)
 );
 
+
 -- --------------------------------------------------------
 
 -- Types
@@ -58,6 +59,8 @@ CREATE TABLE Types (
     typeName VARCHAR(255) NOT NULL
 );
 
+INSERT INTO Types (typeName) VALUES
+    ('suv');
 -- --------------------------------------------------------
 
 -- Colors
@@ -66,11 +69,18 @@ CREATE TABLE Colors (
     colorName VARCHAR(255) NOT NULL
 );
 
+INSERT INTO Colors (colorName) VALUES
+    ('branco'),
+    ('preto'),
+    ('amarelo'),
+    ('verde');
+
 -- --------------------------------------------------------
 
 -- Brands
 CREATE TABLE Brands (
     brandId   INT AUTO_INCREMENT PRIMARY KEY,
+    imageURL  TEXT,
     brandName VARCHAR(255) NOT NULL
 );
 
@@ -87,11 +97,20 @@ CREATE TABLE Products (
     typeId      INT,
     colorId     INT,
     brandId     INT,
-    purchaseId  INT,
     FOREIGN KEY (typeId)     REFERENCES Types(typeId),
     FOREIGN KEY (colorId)    REFERENCES Colors(colorId),
-    FOREIGN KEY (brandId)    REFERENCES Brands(brandId),
-    FOREIGN KEY (purchaseId) REFERENCES Purchases(purchaseId)
+    FOREIGN KEY (brandId)    REFERENCES Brands(brandId)
+);
+
+-- --------------------------------------------------------
+
+-- PurchaseProductsRelation
+CREATE TABLE PurchaseProductsRelation (
+    purchaseId INT,
+    prodId     INT,
+    PRIMARY KEY (purchaseId, prodId),
+    FOREIGN KEY (purchaseId) REFERENCES Purchases(purchaseId) ON DELETE CASCADE,
+    FOREIGN KEY (prodId)     REFERENCES Products(prodId)      ON DELETE CASCADE
 );
 
 -- --------------------------------------------------------
