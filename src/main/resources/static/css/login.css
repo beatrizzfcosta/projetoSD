@@ -1,0 +1,82 @@
+/* Fundo escuro */
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #212121;
+}
+
+/* Centralizar o conteúdo e colocar a imagem de fundo */
+.background {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+
+    background-image: url('../images/fundo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    position: relative;
+}
+
+/* Camada escura sobre a imagem para destacar o card */
+.background::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+/* Card com fundo escuro e efeito glassmorphism */
+.glass-card {
+    background: rgba(20, 20, 20, 0.6); /* fundo escuro semi-transparente */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 30px;
+    width: 300px;
+    color: white;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+
+    position: relative;
+    z-index: 2;
+}
+
+/* Inputs e botão */
+.glass-card input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 14px;
+    outline: none;
+}
+
+.glass-card input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.glass-card button {
+    width: 100%;
+    padding: 10px;
+    background: #ffcb00; /* cor amarela */
+    color: #212121;       /* texto escuro para contraste */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+}
+
+.glass-card button:hover {
+    background: #e6b800; /* amarelo um pouco mais escuro no hover */
+}

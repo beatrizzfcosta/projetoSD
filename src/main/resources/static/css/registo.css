@@ -1,0 +1,101 @@
+/* Fundo escuro */
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #212121;
+}
+
+/* Centralizar o conteúdo e colocar a imagem de fundo */
+.background {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+
+    background-image: url('../images/fundo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    position: relative;
+}
+
+/* Camada escura sobre a imagem para destacar o card */
+.background::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+/* Card com fundo escuro e efeito glassmorphism - bordas arredondadas */
+.glass-card {
+    background: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px; /* ← Borda arredondada */
+    padding: 30px;
+    width: 300px;
+    color: white;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 2;
+}
+
+/* Inputs */
+.glass-card input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 8px; /* ← Borda arredondada nos inputs */
+    color: white;
+    font-size: 14px;
+    outline: none;
+}
+
+.glass-card input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Botão principal */
+.glass-card button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background: #ffcb00;
+    color: #212121;
+    border: none;
+    border-radius: 8px; /* ← Borda arredondada no botão */
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+}
+
+.glass-card button[type="submit"]:hover {
+    background: #e6b800;
+}
+
+/* Botão para redirecionar para login */
+.login-redirect {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background: transparent;
+    color: #ffcb00;
+    border: 1px solid #ffcb00;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 8px; /* ← Borda arredondada */
+    transition: all 0.3s ease;
+}
+
+.login-redirect:hover {
+    background: #ffcb00;
+    color: #212121;
+}
