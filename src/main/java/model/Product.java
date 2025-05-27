@@ -1,0 +1,123 @@
+package model;
+
+import jakarta.persistence.*;
+
+import java.math.BigDecimal;
+
+@Entity
+@Table(name = "Products")
+public class Product {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer prodId;
+
+    @Column(nullable = false)
+    private String name;
+
+    private String description;
+
+    private String imageURL;
+
+    private Integer doorCount;
+
+    private BigDecimal price;
+
+    @ManyToOne
+    @JoinColumn(name = "typeId")
+    private Type type;
+
+    @ManyToOne
+    @JoinColumn(name = "colorId")
+    private Color color;
+
+    @ManyToOne
+    @JoinColumn(name = "brandId")
+    private Brand brand;
+
+    @ManyToOne
+    @JoinColumn(name = "purchaseId")
+    private Purchase purchase;
+
+    public Product() {}
+
+    public Integer getProdId() {
+        return prodId;
+    }
+
+    public void setProdId(Integer prodId) {
+        this.prodId = prodId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public Integer getDoorCount() {
+        return doorCount;
+    }
+
+    public void setDoorCount(Integer doorCount) {
+        this.doorCount = doorCount;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
+    public Purchase getPurchase() {
+        return purchase;
+    }
+
+    public void setPurchase(Purchase purchase) {
+        this.purchase = purchase;
+    }
+}
