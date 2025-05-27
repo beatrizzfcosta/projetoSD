@@ -39,10 +39,6 @@ public class Product {
     @JoinColumn(name = "brandId")
     private Brand brand;
 
-    @ManyToOne
-    @JoinColumn(name = "purchaseId")
-    private Purchase purchase;
-
     public Product() {}
 
     public Integer getProdId() {
@@ -115,13 +111,5 @@ public class Product {
 
     public void setBrand(Brand brand) {
         this.brand = brand;
-    }
-
-    public Purchase getPurchase() {
-        return purchase;
-    }
-
-    public void setPurchase(Purchase purchase) {
-        this.purchase = purchase;
     }
 }

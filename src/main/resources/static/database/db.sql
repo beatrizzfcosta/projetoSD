@@ -60,7 +60,14 @@ CREATE TABLE types (
 );
 
 INSERT INTO types (typeName) VALUES
-    ('suv');
+    ('suv'),
+    ('desportivo'),
+    ('rally'),
+    ('hatchback'),
+    ('coupé'),
+    ('cabrio'),
+    ('carrinha');
+
 -- --------------------------------------------------------
 
 -- Colors
@@ -83,6 +90,14 @@ CREATE TABLE brands (
     imageURL  TEXT,
     brandName VARCHAR(255) NOT NULL
 );
+
+INSERT INTO colors (colorName) VALUES
+    ('audi'),
+    ('bmw'),
+    ('mercedes'),
+    ('toyota'),
+    ('volkswagen'),
+    ('porsche');
 
 -- --------------------------------------------------------
 
