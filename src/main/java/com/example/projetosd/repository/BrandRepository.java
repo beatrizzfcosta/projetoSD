@@ -1,6 +1,6 @@
-package repository;
+package com.example.projetosd.repository;
 
-import model.Brand;
+import com.example.projetosd.model.Brand;
 import org.springframework.data.repository.CrudRepository;
 
 public interface BrandRepository extends CrudRepository<Brand, Integer> {

@@ -1,6 +1,6 @@
-package repository;
+package com.example.projetosd.repository;
 
-import model.User;
+import com.example.projetosd.model.User;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, Integer> {

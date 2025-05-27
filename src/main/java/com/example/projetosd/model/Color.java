@@ -1,16 +1,17 @@
-package model;
+package com.example.projetosd.model;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Colors")
+@Table(name = "colors")
 public class Color {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "colorId")
     private Integer colorId;
 
-    @Column(nullable = false)
+    @Column(name = "colorName", nullable = false)
     private String colorName;
 
     public Color() {}

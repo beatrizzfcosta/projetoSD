@@ -1,6 +1,6 @@
-package repository;
+package com.example.projetosd.repository;
 
-import model.Purchase;
+import com.example.projetosd.model.Purchase;
 import org.springframework.data.repository.CrudRepository;
 
 public interface PurchaseRepository extends CrudRepository<Purchase, Integer> {
