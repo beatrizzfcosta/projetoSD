@@ -56,17 +56,16 @@ CREATE TABLE purchases (
 -- Types
 CREATE TABLE types (
     typeId   INT AUTO_INCREMENT PRIMARY KEY,
-    typeName VARCHAR(255) NOT NULL
+    typeName VARCHAR(255) NOT NULL,
+    imageURL TEXT
 );
 
-INSERT INTO types (typeName) VALUES
-    ('suv'),
-    ('desportivo'),
-    ('rally'),
-    ('hatchback'),
-    ('coupé'),
-    ('cabrio'),
-    ('carrinha');
+INSERT INTO types (typeName, imageURL) VALUES
+    ('suv', '/images/suv.png'), 
+    ('hatchback', '/images/hatchback.png'), 
+    ('coupé', '/images/coupe.png'), 
+    ('cabrio', '/images/cabrio.png'), 
+    ('carrinha', '/images/carrinha.png'); 
 
 -- --------------------------------------------------------
 
@@ -91,13 +90,13 @@ CREATE TABLE brands (
     brandName VARCHAR(255) NOT NULL
 );
 
-INSERT INTO brands (brandName) VALUES
-    ('audi'),
-    ('bmw'),
-    ('mercedes'),
-    ('toyota'),
-    ('volkswagen'),
-    ('porsche');
+INSERT INTO brands (brandName, imageURL) VALUES
+    ('audi', '/images/audi.png'),
+    ('bmw', '/images/bmw.png'),
+    ('mercedes', '/images/mercedes.png'),
+    ('toyota', '/images/Toyota.png'),
+    ('volkswagen', '/images/Volkswagen.png'),
+    ('porsche', '/images/porshe.png');
 
 -- --------------------------------------------------------
 

@@ -5,7 +5,7 @@
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title th:replace="components/header :: title">Classic Cars</title>
-      <link rel="stylesheet" href="../static/css/style.css" />
+      <link rel="stylesheet" th:href="@{/css/style.css}" />
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
@@ -19,16 +19,16 @@
             <div class="carousel-inner">
                   <div class="carousel-items">
                         <div class="carousel-item">
-                              <img src="images/YELLOW.png" alt="Carro Amarelo">
+                              <img th:src="@{/images/yellow.png}" alt="Carro Amarelo">
                         </div>
                         <div class="carousel-item">
-                              <img src="images/RED.png" alt="Carro Vermelho">
+                              <img th:src="@{/images/red.png}" alt="Carro Vermelho">
                         </div>
                         <div class="carousel-item">
-                              <img src="images/WHITE.png" alt="Carro Branco">
+                              <img th:src="@{/images/white.png}" alt="Carro Branco">
                         </div>
                         <div class="carousel-item">
-                              <img src="images/BEIGE.png" alt="Carro Bege">
+                              <img th:src="@{/images/beige.png}" alt="Carro Bege">
                         </div>
                   </div>
 
@@ -46,16 +46,11 @@
 <div th:replace="components/info-container :: info-container"></div>
 
 <section class="search-filters">
-      <div class="search-container">
-            <div class="search-bar">
-                  <input type="text" placeholder="Pesquisar carros...">
-                  <button><i class="fas fa-search"></i></button>
-            </div>
-
+      <form class="search-container" method="get" th:action="@{/loja}">
             <div class="filters-container">
                   <div class="filter-group">
                         <label>Preço</label>
-                        <select>
+                        <select name="preco">
                               <option value="">Todos os preços</option>
                               <option value="0-50000">Até €50.000</option>
                               <option value="50000-100000">€50.000 - €100.000</option>
@@ -66,7 +61,7 @@
 
                   <div class="filter-group">
                         <label>Ano</label>
-                        <select>
+                        <select name="ano">
                               <option value="">Todos os anos</option>
                               <option value="1950-1960">1950 - 1960</option>
                               <option value="1960-1970">1960 - 1970</option>
@@ -78,56 +73,42 @@
 
                   <div class="filter-group">
                         <label>Marca</label>
-                        <select>
+                        <select name="marca">
                               <option value="">Todas as marcas</option>
-                              <option value="audi">Audi</option>
-                              <option value="bmw">BMW</option>
-                              <option value="mercedes">Mercedes</option>
-                              <option value="porsche">Porsche</option>
-                              <option value="toyota">Toyota</option>
-                              <option value="volkswagen">Volkswagen</option>
+                              <option th:each="brand : ${ListBrands}" th:value="${brand.brandName}" th:text="${brand.brandName}"></option>
                         </select>
                   </div>
 
                   <div class="filter-group">
                         <label>Transmissão</label>
-                        <select>
+                        <select name="transmissao">
                               <option value="">Todas</option>
                               <option value="manual">Manual</option>
                               <option value="automatico">Automático</option>
                         </select>
                   </div>
+                  <button type="submit"><i class="fas fa-search"></i></button>
             </div>
-      </div>
+      </form>
 </section>
 
 <main>
       <section class="brand-cards">
             <h2>Nossas Marcas</h2>
             <div class="cards-container">
-                  <div class="brand-card">
-                        <img src="images/audi.png" alt="Audi">
-                        <h3>Audi</h3>
+                  <div class="brand-card" th:each="brand : ${ListBrands}">
+                        <img th:src="@{${brand.imageURL}}" th:alt="${brand.brandName}">
+                        <h3 th:text="${brand.brandName}"></h3>
                   </div>
-                  <div class="brand-card">
-                        <img src="images/bmw.png" alt="BMW">
-                        <h3>BMW</h3>
-                  </div>
-                  <div class="brand-card">
-                        <img src="images/mercedes.png" alt="Mercedes">
-                        <h3>Mercedes</h3>
-                  </div>
-                  <div class="brand-card">
-                        <img src="images/porshe.png" alt="Porsche">
-                        <h3>Porsche</h3>
-                  </div>
-                  <div class="brand-card">
-                        <img src="images/Toyota.png" alt="Toyota">
-                        <h3>Toyota</h3>
-                  </div>
-                  <div class="brand-card">
-                        <img src="images/Volkswagen.png" alt="Volkswagen">
-                        <h3>Volkswagen</h3>
+            </div>
+      </section>
+
+      <section class="car-types-cards">
+            <h2>Tipos de Carros</h2>
+            <div class="cards-container">
+                  <div class="type-card" th:each="type : ${ListTypes}">
+                        <img th:src="@{${type.imageURL}}" th:alt="${type.typeName}">
+                        <h3 th:text="${type.typeName}"></h3>
                   </div>
             </div>
       </section>
@@ -136,11 +117,11 @@
             <h2>Tipos de Transmissão</h2>
             <div class="cards-container">
                   <div class="transmission-card">
-                        <img src="images/1.png" alt="Transmissão Manual">
+                        <img th:src="@{/images/2.png}" alt="Transmissão Manual">
                         <h3>Manual</h3>
                   </div>
                   <div class="transmission-card">
-                        <img src="images/2.png" alt="Transmissão Automática">
+                        <img th:src="@{/images/1.png}" alt="Transmissão Automática">
                         <h3>Automática</h3>
                   </div>
             </div>
