@@ -47,8 +47,10 @@ CREATE TABLE userSessions (
 CREATE TABLE purchases (
     purchaseId INT AUTO_INCREMENT PRIMARY KEY,
     userId     INT,
+    date       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (userId) REFERENCES users(userId)
 );
+
 
 
 -- --------------------------------------------------------
@@ -61,11 +63,11 @@ CREATE TABLE types (
 );
 
 INSERT INTO types (typeName, imageURL) VALUES
-    ('suv', '/images/suv.png'), 
-    ('hatchback', '/images/hatchback.png'), 
-    ('coupé', '/images/coupe.png'), 
-    ('cabrio', '/images/cabrio.png'), 
-    ('carrinha', '/images/carrinha.png'); 
+    ('suv', '/images/suv.png'),
+    ('hatchback', '/images/hatchback.png'),
+    ('coupé', '/images/coupe.png'),
+    ('cabrio', '/images/cabrio.png'),
+    ('carrinha', '/images/carrinha.png');
 
 -- --------------------------------------------------------
 
@@ -102,7 +104,7 @@ INSERT INTO brands (brandName, imageURL) VALUES
 
 -- Products
 CREATE TABLE products (
-    prodId      INT AUTO_INCREMENT PRIMARY KEY,
+    productId   INT AUTO_INCREMENT PRIMARY KEY,
     name        VARCHAR(255) NOT NULL,
     description TEXT,
     imageURL    TEXT,
@@ -118,13 +120,14 @@ CREATE TABLE products (
 
 -- --------------------------------------------------------
 
--- PurchaseProductsRelation
-CREATE TABLE purchaseProductsRelation (
+-- PurchaseProducts
+CREATE TABLE purchaseProducts (
     purchaseId INT,
-    prodId     INT,
-    PRIMARY KEY (purchaseId, prodId),
+    productId  INT,
+    quantity   INT,
+    PRIMARY KEY (purchaseId, productId),
     FOREIGN KEY (purchaseId) REFERENCES purchases(purchaseId) ON DELETE CASCADE,
-    FOREIGN KEY (prodId)     REFERENCES products(prodId)      ON DELETE CASCADE
+    FOREIGN KEY (productId)  REFERENCES products(productId)   ON DELETE CASCADE
 );
 
 -- --------------------------------------------------------
