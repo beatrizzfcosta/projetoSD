@@ -3,7 +3,7 @@ package com.example.projetosd.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Purchases")
+@Table(name = "purchases")
 public class Purchase {
 
     @Id
