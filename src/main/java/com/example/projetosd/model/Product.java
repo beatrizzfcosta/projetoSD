@@ -3,6 +3,8 @@ package com.example.projetosd.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "products")
@@ -10,8 +12,8 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "prodId")
-    private Integer prodId;
+    @Column(name = "productId", nullable = false)
+    private Integer productId;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -40,77 +42,44 @@ public class Product {
     @JoinColumn(name = "brandId")
     private Brand brand;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<PurchaseProduct> purchaseProducts = new LinkedHashSet<>();
+
     public Product() {}
 
-    public Integer getProdId() {
-        return prodId;
-    }
+    public Integer getProductId() {return productId;}
 
-    public void setProdId(Integer prodId) {
-        this.prodId = prodId;
-    }
+    public void setProductId(Integer prodId) {this.productId = prodId;}
 
-    public String getName() {
-        return name;
-    }
+    public String getName() {return name;}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setName(String name) {this.name = name;}
 
-    public String getDescription() {
-        return description;
-    }
+    public String getDescription() {return description;}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public void setDescription(String description) {this.description = description;}
 
-    public String getImageURL() {
-        return imageURL;
-    }
+    public String getImageURL() {return imageURL;}
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
-    }
+    public void setImageURL(String imageURL) {this.imageURL = imageURL;}
 
-    public Integer getDoorCount() {
-        return doorCount;
-    }
+    public Integer getDoorCount() {return doorCount;}
 
-    public void setDoorCount(Integer doorCount) {
-        this.doorCount = doorCount;
-    }
+    public void setDoorCount(Integer doorCount) {this.doorCount = doorCount;}
 
-    public BigDecimal getPrice() {
-        return price;
-    }
+    public BigDecimal getPrice() {return price;}
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
+    public void setPrice(BigDecimal price) {this.price = price;}
 
-    public Type getType() {
-        return type;
-    }
+    public Type getType() {return type;}
 
-    public void setType(Type type) {
-        this.type = type;
-    }
+    public void setType(Type type) {this.type = type;}
 
-    public Color getColor() {
-        return color;
-    }
+    public Color getColor() {return color;}
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
+    public void setColor(Color color) {this.color = color;}
 
-    public Brand getBrand() {
-        return brand;
-    }
+    public Brand getBrand() {return brand;}
 
-    public void setBrand(Brand brand) {
-        this.brand = brand;
-    }
+    public void setBrand(Brand brand) {this.brand = brand;}
 }
