@@ -6,93 +6,13 @@
     <title th:fragment="title">Classic Cars</title>
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-        }
-
-        .navbar.scrolled {
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-        }
-
-        .navbar .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .navbar .nav-links {
-            display: flex;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .navbar .nav-links li {
-            margin-left: 2rem;
-        }
-
-        .navbar .nav-links a {
-            color: #333;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .navbar .nav-links a:hover {
-            color: #007bff;
-        }
-
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: white;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 0.5rem 0;
-            min-width: 150px;
-            display: none;
-        }
-
-        .dropdown:hover .dropdown-menu {
-            display: block;
-        }
-
-        .dropdown-menu li {
-            margin: 0;
-        }
-
-        .dropdown-menu a {
-            padding: 0.5rem 1rem;
-            display: block;
-        }
-
-        .dropdown-menu a:hover {
-            background-color: #f8f9fa;
-        }
-
-        /* Add padding to body to account for fixed header */
-        body {
-            padding-top: 70px;
-        }
-    </style>
 </head>
 <body>
 <header th:fragment="header" class="navbar">
-    <div class="logo">Classic Cars</div>
+    <div class="logo">
+        <img class="logo-default" th:src="@{/images/logo.png}" alt="TagusClassics" style="height:55px; vertical-align:middle;">
+        <img class="logo-white" th:src="@{/images/logo-branco.png}" alt="TagusClassics" style="height:55px; vertical-align:middle;">
+    </div>
     <ul class="nav-links">
         <li><a href="/loja">Loja</a></li>
         <li><a href="/sobre">Sobre Nós</a></li>
@@ -110,14 +30,20 @@
 <script th:fragment="header-script">
     document.addEventListener('DOMContentLoaded', function() {
         const navbar = document.querySelector('.navbar');
-
-        window.addEventListener('scroll', function() {
+        
+        function checkScroll() {
             if (window.scrollY > 50) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
             }
-        });
+        }
+
+        // Verifica o scroll inicial
+        checkScroll();
+        
+        // Adiciona o listener de scroll
+        window.addEventListener('scroll', checkScroll);
     });
 </script>
 </body>

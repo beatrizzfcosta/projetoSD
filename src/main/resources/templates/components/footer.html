@@ -39,51 +39,5 @@
 </footer>
 </body>
 </html>
-header
 
 
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-  Expandir
-  message.txt
-  4 KB
-  info container
-
-
-  <!DOCTYPE html>
-  <html xmlns:th="http://www.thymeleaf.org">
-  <body>
-  <section th:fragment="info-container" class="store-info">
-    <div class="car-info-block">
-      <span class="car-info-title">Marca</span>
-      <span class="car-info-value" th:text="${marca ?: 'Porsche 911'}">Porsche 911</span>
-    </div>
-    <div class="separator"></div>
-    <div class="car-info-block">
-      <span class="car-info-title">Ano</span>
-      <span class="car-info-value" th:text="${ano ?: '1964'}">1964</span>
-    </div>
-    <div class="separator"></div>
-    <div class="car-info-block">
-      <span class="car-info-title">KMs</span>
-      <span class="car-info-value" th:text="${kms ?: '250.000'}">250.000</span>
-    </div>
-    <div class="separator"></div>
-    <div class="car-info-block">
-      <span class="car-info-title">Caixa</span>
-      <span class="car-info-value" th:text="${caixa ?: 'Manual'}">Manual</span>
-    </div>
-    <div class="separator"></div>
-    <div class="car-info-block">
-      <span class="car-info-title">Cor</span>
-      <span class="car-info-value" th:text="${cor ?: 'Amarelo'}">Amarelo</span>
-    </div>
-    <div class="separator"></div>
-    <div class="car-info-block">
-      <span class="car-info-title">Valor</span>
-      <span class="car-info-value" th:text="${valor ?: '€230.000'}">€230.000</span>
-    </div>
-  </section>
-  </body>
-  </html>

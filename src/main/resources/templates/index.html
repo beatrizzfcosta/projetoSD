@@ -9,7 +9,7 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
-<body>
+<body class="index">
 <!-- Navbar -->
 <div th:replace="components/header :: header"></div>
 
@@ -131,8 +131,8 @@
 <!-- Footer -->
 <div th:replace="components/footer :: footer"></div>
 
-<script src="/js/script.js"></script>
-<div th:replace="components/header :: header-script"></div>
+<script th:src="@{/js/script.js}"></script>
+<script th:src="@{/js/menu.js}"></script>
 </body>
 
 </html>

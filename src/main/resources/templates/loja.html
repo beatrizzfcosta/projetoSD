@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compre Agora</title>
-    <link rel="stylesheet" href="../static/css/loja.css" />
+    <link rel="stylesheet" th:href="@{/css/loja.css}" />
 </head>
 <body>
 
 <header>
     <h1>Loja</h1>
     <nav>
-        <a href="/">Início</a>
-        <a href="/comprar" class="active">Comprar</a>
-        <a href="/sobre">Sobre Nós</a>
+        <a th:href="@{/}">Início</a>
+        <a th:href="@{/comprar}" class="active">Comprar</a>
+        <a th:href="@{/sobre}">Sobre Nós</a>
     </nav>
 </header>
 
@@ -26,7 +28,6 @@
         </div>
     </div>
 </section>
-
 
 <!-- Lista de Produtos -->
 <section class="lista-produtos">

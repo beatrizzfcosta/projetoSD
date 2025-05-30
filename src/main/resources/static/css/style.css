@@ -15,7 +15,7 @@ body {
 /* Navbar */
 .navbar {
     color: white;
-    padding: 1rem;
+    padding: 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -24,32 +24,68 @@ body {
     left: 0;
     right: 0;
     z-index: 99999;
-    background-color: transparent;
+    background-color: #003b49;
     transition: all 0.5s ease-in-out;
     height: 50px;
-    margin-top: 10px;
     pointer-events: auto;
 }
 
+/* Menu transparente apenas na página inicial */
+body.index .navbar {
+    background-color: transparent;
+}
+
+body.index .navbar.scrolled {
+    background-color: #003b49;
+}
+
 .navbar.scrolled {
-    background-color: black;
-    margin-top: 0;
+    padding: 1rem;
     height: 60px;
     z-index: 99999;
     pointer-events: auto;
 }
 
-.navbar.scrolled .logo,
-.navbar.scrolled .nav-links a {
-    color: white;
-}
-
-.logo {
+.navbar .logo {
     font-size: 1.5rem;
     font-weight: bold;
     margin-left: 100px;
     color: black;
     position: relative;
+}
+
+.navbar .logo img {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: opacity 0.3s ease-in-out;
+}
+
+.navbar .logo .logo-default {
+    opacity: 1;
+}
+
+.navbar .logo .logo-white {
+    opacity: 0;
+}
+
+/* Quando o navbar está com fundo colorido (scrolled ou não na página inicial) */
+.navbar.scrolled .logo .logo-default,
+body:not(.index) .navbar .logo .logo-default {
+    opacity: 0;
+}
+
+.navbar.scrolled .logo .logo-white,
+body:not(.index) .navbar .logo .logo-white {
+    opacity: 1;
+}
+
+/* Texto branco quando o menu tem fundo #003b49 */
+body:not(.index) .navbar .logo,
+body:not(.index) .navbar .nav-links a,
+.navbar.scrolled .logo,
+.navbar.scrolled .nav-links a {
+    color: white;
 }
 
 .nav-links {
@@ -61,6 +97,10 @@ body {
     color: black;
 }
 
+.navbar.scrolled .nav-links {
+    color: white;
+}
+
 .nav-links a {
     color: inherit;
     text-decoration: none;
@@ -68,6 +108,7 @@ body {
     align-items: center;
     gap: 0.5rem;
     position: relative;
+    color: #003b49;
 }
 
 .nav-links a::after {
@@ -113,7 +154,7 @@ body {
     border-radius: 4px;
     padding: 8px 0;
     z-index: 1000;
-    color: black;
+    color: #003b49;
     padding: 10px;
 }
 
@@ -123,10 +164,11 @@ body {
 
 .nav-links .dropdown-menu li {
     list-style: none;
+    color: #003b49;
 }
 
 .nav-links .dropdown-menu a {
-    color: black;
+    color: #003b49;
     padding: 8px 16px;
     display: block;
     text-decoration: none;
@@ -243,7 +285,7 @@ input[type="radio"] {
 
 /* Caixa de informações da loja */
 .store-info {
-    background-color: black;
+    background-color: #003b49;
     padding: 3rem;
     width: 100%;
     max-width: 1200px;
@@ -469,7 +511,7 @@ input[type="radio"] {
 }
 
 .filters-container button[type="submit"] {
-    background-color: #333;
+    background-color: #003b49;
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -485,7 +527,7 @@ input[type="radio"] {
 }
 
 .filters-container button[type="submit"]:hover {
-    background-color: #000;
+    background-color: #003a49b0;
 }
 
 .filter-group label {
@@ -559,7 +601,7 @@ input[type="radio"] {
 
 /* Footer Styles */
 .footer {
-    background-color: black;
+    background-color: #003b49;
     color: #fff;
     padding: 4rem 0 0 0;
     margin-top: 4rem;
@@ -665,3 +707,4 @@ input[type="radio"] {
     margin: 0;
     text-transform: capitalize;
 }
+

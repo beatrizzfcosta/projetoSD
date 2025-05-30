@@ -122,7 +122,7 @@ body {
 }
 .checkout-btn {
     width: 100%;
-    background: #4caf50;
+    background: #003b49;
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -134,7 +134,7 @@ body {
     cursor: pointer;
 }
 .checkout-btn:hover {
-    background: #388e3c;
+    background: #003a49d1;
 }
 @media (max-width: 900px) {
     .container {

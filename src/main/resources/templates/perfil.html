@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:replace="components/header :: title">Perfil - Classic Cars</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/perfil-style.css}" />
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div th:replace="components/header :: header"></div>
+
+    <div class="profile-wrapper">
+
+        <div class="profile-container">
+            <div class="profile-header">
+                <h2>Meu Perfil</h2>
+                <button class="edit-button" onclick="openEditModal()">
+                    <i class="fas fa-edit"></i> Editar
+                </button>
+            </div>
+            <div class="profile-card">
+                <div class="profile-info">
+                    <div class="info-group">
+                        <i class="fas fa-user"></i>
+                        <div class="info-content">
+                            <label>Nome</label>
+                            <p th:text="${user.nome}">Nome do Usuário</p>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <i class="fas fa-envelope"></i>
+                        <div class="info-content">
+                            <label>Email</label>
+                            <p th:text="${user.mail}">email@exemplo.com</p>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <i class="fas fa-id-card"></i>
+                        <div class="info-content">
+                            <label>NIF</label>
+                            <p th:text="${user.nif ?: 'Não informado'}">NIF</p>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <i class="fas fa-home"></i>
+                        <div class="info-content">
+                            <label>Morada</label>
+                            <p th:text="${user.morada ?: 'Não informado'}">Morada</p>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="info-content">
+                            <label>Código Postal</label>
+                            <p th:text="${user.codigoPostal ?: 'Não informado'}">Código Postal</p>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <i class="fas fa-globe"></i>
+                        <div class="info-content">
+                            <label>País</label>
+                            <p th:text="${user.pais ?: 'Não informado'}">País</p>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <i class="fas fa-phone"></i>
+                        <div class="info-content">
+                            <label>Telefone</label>
+                            <p th:text="${user.telefone ?: 'Não informado'}">Telefone</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Edição -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Editar Perfil</h3>
+                <button class="close-button" onclick="closeEditModal()">&times;</button>
+            </div>
+            <form class="edit-form" th:action="@{/perfil/atualizar}" method="post" th:object="${user}">
+                <div class="form-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" th:field="*{nome}" placeholder="Nome completo" required />
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" th:field="*{mail}" placeholder="Email" required />
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-id-card"></i>
+                    <input type="text" th:field="*{nif}" placeholder="NIF (opcional)" />
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-home"></i>
+                    <input type="text" th:field="*{morada}" placeholder="Morada (opcional)" />
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <input type="text" th:field="*{codigoPostal}" placeholder="Código Postal (opcional)" />
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-globe"></i>
+                    <input type="text" th:field="*{pais}" placeholder="País (opcional)" />
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-phone"></i>
+                    <input type="text" th:field="*{telefone}" placeholder="Telefone (opcional)" />
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="senha" placeholder="Nova senha (opcional)" />
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="confirmarSenha" placeholder="Confirmar nova senha (opcional)" />
+                </div>
+                <button type="submit" class="submit-btn">Salvar Alterações</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openEditModal() {
+            const modal = document.getElementById('editModal');
+            modal.classList.add('show');
+        }
+
+        function closeEditModal() {
+            const modal = document.getElementById('editModal');
+            modal.classList.remove('show');
+        }
+
+        // Fechar o modal quando clicar fora dele
+        window.onclick = function (event) {
+            const modal = document.getElementById('editModal');
+            if (event.target == modal) {
+                modal.classList.remove('show');
+            }
+        }
+    </script>
+</body>
+
+</html>
