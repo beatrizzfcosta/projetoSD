@@ -5,6 +5,10 @@ import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.layout.Style;
+import com.itextpdf.layout.borders.Border;
+import com.itextpdf.layout.borders.SolidBorder;
+import com.itextpdf.layout.properties.TextAlignment;
+
 import java.io.IOException;
 
 public class PdfStyles {
@@ -38,6 +42,7 @@ public class PdfStyles {
         return new Style()
                 .setFont(getBoldFont())
                 .setFontSize(12)
+                .setTextAlignment(TextAlignment.CENTER)
                 .setFontColor(ColorConstants.WHITE)
                 .setBackgroundColor(ColorConstants.RED);
     }
@@ -45,6 +50,7 @@ public class PdfStyles {
     public static Style cellStyle() throws IOException {
         return new Style()
                 .setFont(getRegularFont())
+                .setBorderBottom(new SolidBorder(ColorConstants.BLACK,1))
                 .setFontSize(12);
     }
 

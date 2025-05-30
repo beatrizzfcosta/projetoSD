@@ -140,8 +140,7 @@ public class PdfService {
                 tabelaServicos.addCell(new Cell()
                                 .add(new Paragraph(texto))
                                 .addStyle(PdfStyles.cellStyle())
-                                .setBorder(Border.NO_BORDER))
-                        .setTextAlignment(TextAlignment.CENTER);
+                                .setTextAlignment(TextAlignment.CENTER));
             }
         }
 
@@ -155,7 +154,7 @@ public class PdfService {
                 .setMarginTop(20)
                 .setHorizontalAlignment(HorizontalAlignment.RIGHT);
 
-        resumo.addCell(new Cell().add(new Paragraph("Total")).setBorder(Border.NO_BORDER).addStyle(PdfStyles.totalStyle()));
+        resumo.addCell(new Cell().add(new Paragraph("Total:")).setBorder(Border.NO_BORDER).addStyle(PdfStyles.totalStyle()));
         resumo.addCell(new Cell().add(new Paragraph("211,000 €")).setBorder(Border.NO_BORDER).addStyle(PdfStyles.totalStyle()));
 
         return resumo;
