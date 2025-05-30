@@ -32,14 +32,16 @@ public class MainController {
         model.addAttribute("caixa", "Manual");
         model.addAttribute("cor", "Amarelo");
         model.addAttribute("valor", "€230.000");
+        model.addAttribute("Products", prodRepository.findAll());
         return "index";
     }
 
     @GetMapping(path="/teste")
-    public String getAllDeps(Model model) {
+    public String getAll(Model model) {
         model.addAttribute("ListDeps", prodRepository.findAll());
         model.addAttribute("ListBrands", brandRepository.findAll());
         model.addAttribute("ListTypes", typeRepository.findAll());
+
         return "index";
     }
 
