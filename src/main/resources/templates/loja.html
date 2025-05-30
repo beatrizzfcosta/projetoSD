@@ -1,11 +1,11 @@
-<!-- comprar.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Compre Agora</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" href="../static/css/loja.css" />
 </head>
 <body>
+
 <header>
     <h1>Loja</h1>
     <nav>
@@ -15,17 +15,49 @@
     </nav>
 </header>
 
+<!-- Carrossel de Imagens -->
+<section class="topo-loja">
+    <div class="carrossel">
+        <div class="slides">
+            <div class="slide"><img th:src="@{/imagens/yellow.png}" alt="Carro amarelo" /></div>
+            <div class="slide"><img th:src="@{/imagens/red.png}" alt="Carro vermelho" /></div>
+            <div class="slide"><img th:src="@{/imagens/white.png}" alt="Carro branco" /></div>
+            <div class="slide"><img th:src="@{/imagens/beige.png}" alt="Carro beige" /></div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Lista de Produtos -->
 <section class="lista-produtos">
     <h2>Todos os Produtos</h2>
     <div class="produtos">
         <div class="produto">
-            <img src="/images/produto1.jpg" alt="Produto 1">
+            <img src="/imagens/produto1.jpg" alt="Produto 1">
             <h4>Produto 1</h4>
             <p>Descrição do produto.</p>
             <button>Comprar</button>
         </div>
-        <!-- Mais produtos -->
+        <div class="produto">
+            <img src="/imagens/produto2.jpg" alt="Produto 2">
+            <h4>Produto 2</h4>
+            <p>Descrição do produto.</p>
+            <button>Comprar</button>
+        </div>
+        <div class="produto">
+            <img src="/imagens/produto3.jpg" alt="Produto 3">
+            <h4>Produto 3</h4>
+            <p>Descrição do produto.</p>
+            <button>Comprar</button>
+        </div>
+        <div class="produto">
+            <img src="/imagens/produto4.jpg" alt="Produto 4">
+            <h4>Produto 4</h4>
+            <p>Descrição do produto.</p>
+            <button>Comprar</button>
+        </div>
     </div>
 </section>
+
 </body>
 </html>

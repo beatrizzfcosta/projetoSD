@@ -1,0 +1,123 @@
+/* Reset básico */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* Header */
+header {
+    background-color: #222;
+    color: #fff;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav a {
+    color: white;
+    margin-left: 1rem;
+    text-decoration: none;
+}
+
+nav a.active {
+    text-decoration: underline;
+}
+
+/* Carrossel */
+.topo-loja .carrossel {
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    position: relative;
+    background-color: #000;
+}
+
+.topo-loja .slides {
+    display: flex;
+    width: 400%;
+    height: 100%;
+    animation: slide 16s infinite;
+}
+
+.topo-loja .slide {
+    width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+}
+
+.topo-loja .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@keyframes slide {
+    0%   { transform: translateX(0%); }
+    25%  { transform: translateX(0%); }
+    30%  { transform: translateX(-100%); }
+    50%  { transform: translateX(-100%); }
+    55%  { transform: translateX(-200%); }
+    75%  { transform: translateX(-200%); }
+    80%  { transform: translateX(-300%); }
+    100% { transform: translateX(-300%); }
+}
+
+/* Lista de Produtos */
+.lista-produtos {
+    padding: 2rem;
+    text-align: center;
+}
+
+.produtos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.produto {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+}
+
+.produto:hover {
+    transform: scale(1.03);
+}
+
+.produto img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.produto h4 {
+    margin: 0.5rem 0 0.3rem;
+}
+
+.produto p {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.produto button {
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #222;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.produto button:hover {
+    background-color: #555;
+}
