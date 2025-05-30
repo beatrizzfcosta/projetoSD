@@ -5,8 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin - Classic Cars</title>
-    <link rel="stylesheet" href="/css/admin-style.css" />
-    <link rel="stylesheet" href="/css/style.css"/>
+    <link rel="stylesheet" th:href="@{/css/admin-style.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -203,28 +203,28 @@
         </section>
 
         <!-- Novo Carro Section -->
-        <section id="novo-carro" class="section" style="display: none;">
+        <section id="novo-carro" class="section" style="display: block;">
             <h2>Adicionar Novo Carro</h2>
-            <form id="novoCarroForm" class="car-form">
+            <form th:action="@{/admin/product/add}" th:object="${productForm}" method="post" class="car-form" id="novoCarroForm">
                 <div class="form-grid">
                     <!-- Informações Básicas -->
                     <div class="form-section">
                         <h3>Informações Básicas</h3>
                         <div class="form-group">
                             <label for="nome">Nome do Carro*</label>
-                            <input type="text" id="nome" name="nome" required>
+                            <input type="text" id="nome" th:field="*{name}" required />
                         </div>
                         <div class="form-group">
                             <label for="descricao">Descrição</label>
-                            <textarea id="descricao" name="descricao" rows="3"></textarea>
+                            <textarea id="descricao" th:field="*{description}" rows="3"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="preco">Preço (€)*</label>
-                            <input type="number" id="preco" name="preco" step="0.01" required>
+                            <input type="number" id="preco" th:field="*{price}" step="0.01" required />
                         </div>
                         <div class="form-group">
                             <label for="portas">Número de Portas*</label>
-                            <input type="number" id="portas" name="portas" min="2" max="5" required>
+                            <input type="number" id="portas" th:field="*{doorCount}" min="2" max="5" required />
                         </div>
                     </div>
 
@@ -232,28 +232,28 @@
                     <div class="form-section">
                         <h3>Categorização</h3>
                         <div class="form-group">
-                            <label>Marca*</label>
-                            <select id="marca" name="brandId" required>
+                            <label for="marca">Marca*</label>
+                            <select id="marca" th:field="*{brandId}" required>
                                 <option value="">Selecione uma Marca</option>
-                                <option th:each="color : ${ListBrands}"
-                                        th:value="${color.brandId}"
-                                        th:text="${color.brandName}">
+                                <option th:each="brand : ${ListBrands}"
+                                        th:value="${brand.brandId}"
+                                        th:text="${brand.brandName}">
                                 </option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Tipo*</label>
-                            <select name="type" id="typeId" required>
+                            <label for="typeId">Tipo*</label>
+                            <select id="typeId" th:field="*{typeId}" required>
                                 <option value="">Selecione um tipo</option>
-                                <option th:each="color : ${ListType}"
-                                        th:value="${color.typeId}"
-                                        th:text="${color.typeName}">
+                                <option th:each="type : ${ListType}"
+                                        th:value="${type.typeId}"
+                                        th:text="${type.typeName}">
                                 </option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label >Cor*</label>
-                            <select name="colorId" id="colorId" required>
+                            <label for="colorId">Cor*</label>
+                            <select id="colorId" th:field="*{colorId}" required>
                                 <option value="">Selecione uma cor</option>
                                 <option th:each="color : ${ListColors}"
                                         th:value="${color.colorId}"
@@ -268,10 +268,11 @@
                         <h3>Imagem do Carro</h3>
                         <div class="form-group">
                             <label for="imagem">URL da Imagem*</label>
-                            <input type="url" id="imagem" name="imageURL" required>
+                            <input type="url" id="imagem" th:field="*{imageURL}" required />
                         </div>
                         <div class="image-preview">
-                            <img id="previewImage" src="" alt="Preview" style="display: none; max-width: 100%; height: auto;">
+                            <img id="previewImage" th:src="*{imageURL}" alt="Preview"
+                                 th:if="*{imageURL != null}" style="max-width: 100%; height: auto;" />
                         </div>
                     </div>
                 </div>
@@ -396,6 +397,7 @@
         }
     });
 
+    /*
     // Form submission
     document.getElementById('novoCarroForm').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -411,7 +413,7 @@
         alert('Carro adicionado com sucesso!');
         this.reset();
         document.getElementById('previewImage').style.display = 'none';
-    });
+    });*/
 
 </script>
 </body>

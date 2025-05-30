@@ -3,7 +3,7 @@ package com.example.projetosd.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Types")
+@Table(name = "types")
 public class Type {
 
     @Id
@@ -13,6 +13,9 @@ public class Type {
 
     @Column(name = "typeName", nullable = false)
     private String typeName;
+
+    @Column(name = "imageURL")
+    private String imageURL;
 
     public Type() {}
 
@@ -30,5 +33,13 @@ public class Type {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }
