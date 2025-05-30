@@ -14,7 +14,7 @@ public class Brand {
     @Column(name = "brandName", nullable = false)
     private String brandName;
 
-    @Column(name = "imageURL")
+    @Column(name = "imageurl")
     private String imageURL;
 
     public Brand() {}

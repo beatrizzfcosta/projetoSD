@@ -25,6 +25,11 @@ CREATE TABLE users (
     roleId        INT,
     nome          VARCHAR(255) NOT NULL,
     mail          VARCHAR(255) NOT NULL UNIQUE,
+    nif           VARCHAR(255) UNIQUE,
+    morada        VARCHAR(255),
+    codigoPostal  VARCHAR(255),
+    pais          VARCHAR(255),
+    telefone      VARCHAR(255),
     infoAdicional TEXT,
     FOREIGN KEY (roleId) REFERENCES roles(roleId)
 );

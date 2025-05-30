@@ -21,8 +21,26 @@ public class User {
     @Column(name = "mail", nullable = false, unique = true)
     private String mail;
 
-    @Column(name = "infoAdicional")
-    private String infoAdicional;
+    @Column(name = "senha", nullable = false)
+    private String senha;
+
+    @Column(name = "nif", unique = true)
+    private String nif;
+
+    @Column(name = "morada")
+    private String morada;
+
+    @Column(name = "codigoPostal")
+    private String codigoPostal;
+
+    @Column(name = "pais")
+    private String pais;
+
+    @Column(name = "telefone")
+    private String telefone;
+
+    @Transient
+    private String confirmarSenha;
 
     public User() {}
 
@@ -58,11 +76,60 @@ public class User {
         this.mail = mail;
     }
 
-    public String getInfoAdicional() {
-        return infoAdicional;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setInfoAdicional(String infoAdicional) {
-        this.infoAdicional = infoAdicional;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
+
+    public String getConfirmarSenha() {
+        return confirmarSenha;
+    }
+
+    public void setConfirmarSenha(String confirmarSenha) {
+        this.confirmarSenha = confirmarSenha;
+    }
+
+    public String getNif() {
+        return nif;
+    }
+
+    public void setNif(String nif) {
+        this.nif = nif;
+    }
+
+    public String getMorada() {
+        return morada;
+    }
+
+    public void setMorada(String morada) {
+        this.morada = morada;
+    }
+
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
 }

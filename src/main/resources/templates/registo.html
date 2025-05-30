@@ -1,29 +1,68 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Criar Conta</title>
-    <link rel="stylesheet" href="../static/css/registo.css" />
+    <link rel="stylesheet" th:href="@{/css/registo.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
+    <div class="background">
+        <div class="glass-card">
+            <h2>Criar Conta</h2>
+            
+            <div th:if="${erro}" class="alert alert-danger" style="color: #ff6b6b; margin-bottom: 1rem; text-align: center;">
+                <span th:text="${erro}"></span>
+            </div>
+            <div th:if="${sucesso}" class="alert alert-success" style="color: #51cf66; margin-bottom: 1rem; text-align: center;">
+                <span th:text="${sucesso}"></span>
+            </div>
+            
+            <form th:action="@{/registo}" method="post" th:object="${user}">
+                <div class="form-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" th:field="*{nome}" placeholder="Nome completo" required />
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" th:field="*{mail}" placeholder="Email" required />
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" th:field="*{senha}" placeholder="Senha" required />
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" th:field="*{confirmarSenha}" placeholder="Confirmar senha" required />
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-id-card"></i>
+                    <input type="text" th:field="*{nif}" placeholder="NIF (opcional)" />
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-home"></i>
+                    <input type="text" th:field="*{morada}" placeholder="Morada (opcional)" />
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <input type="text" th:field="*{codigoPostal}" placeholder="Código Postal (opcional)" />
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-globe"></i>
+                    <input type="text" th:field="*{pais}" placeholder="País (opcional)" />
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-phone"></i>
+                    <input type="text" th:field="*{telefone}" placeholder="Telefone (opcional)" />
+                </div>
+                <button type="submit" class="submit-btn">Criar conta</button>
+            </form>
 
-<div class="background">
-    <div class="glass-card">
-        <h2>Criar Conta</h2>
-        <form>
-            <input type="text" placeholder="Nome completo" required />
-            <input type="email" placeholder="Email" required />
-            <input type="password" placeholder="Senha" required />
-            <input type="password" placeholder="Confirmar senha" required />
-            <button type="submit">Criar conta</button>
-        </form>
-
-        <!-- Botão para ir para login -->
-        <button class="login-redirect" onclick="window.location.href='login.html'">
-            Já tem uma conta? Entrar
-        </button>
+            <div class="login-redirect">
+                <p>Já tem uma conta? <a th:href="@{/login}">Entrar</a></p>
+            </div>
+        </div>
     </div>
-</div>
-
 </body>
 </html>
