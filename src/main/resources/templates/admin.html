@@ -203,7 +203,7 @@
         </section>
 
         <!-- Novo Carro Section -->
-        <section id="novo-carro" class="section" style="display: block;">
+        <section id="novo-carro" class="section">
             <h2>Adicionar Novo Carro</h2>
             <form th:action="@{/admin/product/add}" th:object="${productForm}" method="post" class="car-form" id="novoCarroForm">
                 <div class="form-grid">
@@ -314,6 +314,11 @@
                 maintainAspectRatio: false
             }
         });
+
+        // Show all sections initially
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.display = 'block';
+        });
     });
 
     // Improved sidebar toggle functionality
@@ -368,7 +373,7 @@
         });
     });
 
-    // Sidebar navigation
+    // Sidebar navigation - Updated to show only selected section when clicking menu items
     document.querySelectorAll('.sidebar-menu a').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -378,11 +383,23 @@
             document.querySelectorAll('.sidebar-menu a').forEach(a => a.classList.remove('active'));
             this.classList.add('active');
 
-            // Show target section
-            document.querySelectorAll('.section').forEach(section => {
-                section.style.display = 'none';
-            });
-            document.getElementById(targetId).style.display = 'block';
+            // If clicking on dashboard, show all sections
+            if (targetId === 'dashboard') {
+                document.querySelectorAll('.section').forEach(section => {
+                    section.style.display = 'block';
+                });
+            } else {
+                // Hide all sections except the selected one
+                document.querySelectorAll('.section').forEach(section => {
+                    section.style.display = 'none';
+                });
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.style.display = 'block';
+                    // Scroll to top of the section
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
         });
     });
 

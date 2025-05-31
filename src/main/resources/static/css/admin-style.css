@@ -16,7 +16,7 @@ body {
 
 .sidebar {
     width: 250px;
-    background: #000000;
+    background: #003b49;
     color: white;
     padding: 1rem;
     position: fixed;
@@ -136,6 +136,9 @@ body {
     transition: margin-left 0.3s ease;
     width: calc(100% - 250px);
     min-width: 0;
+    overflow-y: auto;
+    max-height: 100vh;
+    scroll-behavior: smooth;
 }
 
 .main-content.expanded {
@@ -238,12 +241,12 @@ body {
 }
 
 .data-table .edit-btn {
-    background: #007bff;
+    background: #003b49;
     color: white;
 }
 
 .data-table .edit-btn:hover {
-    background: #0056b3;
+    background: #004d5f;
 }
 
 .data-table .delete-btn {
@@ -364,6 +367,7 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     padding: 1.5rem;
     margin-bottom: 2rem;
+    min-height: 200px;
 }
 
 .filters {
@@ -484,12 +488,12 @@ body {
 }
 
 .btn-primary {
-    background: #007bff;
+    background: #003b49;
     color: white;
 }
 
 .btn-primary:hover {
-    background: #0056b3;
+    background: #004d5f;
 }
 
 .btn-secondary {
@@ -512,4 +516,23 @@ body {
 
 .sidebar.collapsed .store-link {
     border: none;
+}
+
+/* Add section transitions */
+.section {
+    transition: all 0.3s ease;
+}
+
+/* Improve section spacing */
+.section + .section {
+    margin-top: 2rem;
+}
+
+/* Add section headers styling */
+.section h2 {
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 0.5rem;
 }

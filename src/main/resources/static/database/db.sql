@@ -137,4 +137,32 @@ CREATE TABLE purchaseProducts (
 
 -- --------------------------------------------------------
 
+-- Adicionando a marca Ford se não existir
+INSERT INTO brands (brandName, imageURL) VALUES ('ford', '/images/ford.png');
+
+
+INSERT INTO products (name, description, imageURL, doorCount, price, typeId, colorId, brandId)
+VALUES (
+    'Ford Mustang 1969',
+    'Clássico muscle car americano, motor V8, preto.',
+    '/images/carro1.png',
+    2,
+    150000.00,
+    (SELECT typeId FROM types WHERE typeName = 'coupé' LIMIT 1),
+    (SELECT colorId FROM colors WHERE colorName = 'preto' LIMIT 1),
+    (SELECT brandId FROM brands WHERE brandName = 'ford' LIMIT 1)
+);
+
+INSERT INTO products (name, description, imageURL, doorCount, price, typeId, colorId, brandId)
+VALUES (
+    'Mercedes-Benz 220S Coupé',
+    'Elegante clássico alemão, branco, interior luxuoso.',
+    '/images/carro2.png',
+    2,
+    200000.00,
+    (SELECT typeId FROM types WHERE typeName = 'coupé' LIMIT 1),
+    (SELECT colorId FROM colors WHERE colorName = 'branco' LIMIT 1),
+    (SELECT brandId FROM brands WHERE brandName = 'mercedes' LIMIT 1)
+);
+
 COMMIT;
