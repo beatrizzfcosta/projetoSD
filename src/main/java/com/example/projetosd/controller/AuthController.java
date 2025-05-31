@@ -28,7 +28,8 @@ public class AuthController {
         
         if (user != null && user.getSenha().equals(password)) {
             // Login successful
-            return "redirect:/";
+            //alteração desta linha para quando se faz login sendo administrador ir para a pagina de admin
+            return (user.getNome().equals("admin")) ? "redirect:/admin" : "redirect:/";
         } else {
             // Login failed
             model.addAttribute("erro", "Email ou senha inválidos");

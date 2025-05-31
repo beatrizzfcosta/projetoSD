@@ -2,6 +2,7 @@ package com.example.projetosd.model;
 
 import jakarta.persistence.*;
 
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -18,10 +19,13 @@ public class User {
     @Column(name = "nome", nullable = false)
     private String nome;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @Column(name = "mail", nullable = false, unique = true)
     private String mail;
 
-    @Column(name = "senha", nullable = false)
+    @Transient
     private String senha;
 
     @Column(name = "nif", unique = true)
@@ -68,6 +72,14 @@ public class User {
         this.nome = nome;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getMail() {
         return mail;
     }
@@ -81,6 +93,7 @@ public class User {
     }
 
     public void setSenha(String senha) {
+
         this.senha = senha;
     }
 

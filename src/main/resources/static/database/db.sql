@@ -14,8 +14,8 @@ CREATE TABLE roles (
 );
 
 INSERT INTO roles (roleId, nome) VALUES
-(0, 'admin'),
-(1, 'default_user');
+(0, 'ADMIN'),
+(1, 'USER');
 
 -- --------------------------------------------------------
 
@@ -23,9 +23,10 @@ INSERT INTO roles (roleId, nome) VALUES
 CREATE TABLE users (
     userId        INT AUTO_INCREMENT PRIMARY KEY,
     roleId        INT,
-    nome          VARCHAR(255) NOT NULL,
-    mail          VARCHAR(255) NOT NULL UNIQUE,
-    nif           VARCHAR(255) UNIQUE,
+    nome          VARCHAR(255)  NOT NULL,
+    password      VARCHAR(1024) NOT NULL,
+    mail          VARCHAR(255)  NOT NULL UNIQUE,
+    nif           VARCHAR(255)  UNIQUE,
     morada        VARCHAR(255),
     codigoPostal  VARCHAR(255),
     pais          VARCHAR(255),
@@ -34,8 +35,8 @@ CREATE TABLE users (
     FOREIGN KEY (roleId) REFERENCES roles(roleId)
 );
 
-INSERT INTO users (roleId, nome, mail, infoAdicional) VALUES
-    (1, 'admin', 'admin@admin.pt', NULL);
+INSERT INTO users (roleId, nome, password, mail, infoAdicional) VALUES
+    (0, 'admin', '$2a$10$PbLSdKG/3xdaDLvsPxyPKekXqPeNA1mFgKJ.u3TvQrQN4yNgKe9Ii', 'admin@admin.pt', NULL);
 
 
 -- --------------------------------------------------------

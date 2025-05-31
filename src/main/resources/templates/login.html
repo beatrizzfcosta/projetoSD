@@ -12,8 +12,8 @@
         <h2>Login</h2>
         
         <!-- Mensagem de erro -->
-        <div th:if="${erro}" class="alert alert-danger" style="color: #ff6b6b; margin-bottom: 1rem; text-align: center;">
-            <span th:text="${erro}"></span>
+        <div th:if="${param.error}" class="alert alert-danger" style="color: #ff6b6b; margin-bottom: 1rem; text-align: center;">
+            Email ou senha inválidos.
         </div>
         
         <form th:action="@{/login}" method="post">
