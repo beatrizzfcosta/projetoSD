@@ -1,6 +1,7 @@
 package com.example.projetosd.logic;
 
 import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.io.font.PdfEncodings;
@@ -15,6 +16,7 @@ public class PdfStyles {
 
     private static final String FONT_REGULAR_PATH = "src/main/resources/static/font/Montserrat-Regular.ttf";
     private static final String FONT_BOLD_PATH = "src/main/resources/static/font/Montserrat-Bold.ttf";
+
 
     public static PdfFont getRegularFont() throws IOException {
         PdfFontFactory.register(FONT_REGULAR_PATH);
@@ -44,19 +46,32 @@ public class PdfStyles {
                 .setFontSize(12)
                 .setTextAlignment(TextAlignment.CENTER)
                 .setFontColor(ColorConstants.WHITE)
-                .setBackgroundColor(ColorConstants.RED);
+                .setBackgroundColor(new DeviceRgb(33, 37, 41)); // Cinza escuro
     }
 
     public static Style cellStyle() throws IOException {
         return new Style()
                 .setFont(getRegularFont())
-                .setBorderBottom(new SolidBorder(ColorConstants.BLACK,1))
-                .setFontSize(12);
+                .setFontSize(11)
+                .setBorderBottom(new SolidBorder(ColorConstants.LIGHT_GRAY, 0.5f))
+                .setPadding(5);
+    }
+
+    public static Style zebraRowStyle() throws IOException {
+        return new Style()
+                .setFont(getRegularFont())
+                .setFontSize(11)
+                .setBackgroundColor(new DeviceRgb(245, 245, 245))  // cinza claro
+                .setBorderBottom(new SolidBorder(ColorConstants.LIGHT_GRAY, 0.5f))
+                .setPadding(5);
     }
 
     public static Style totalStyle() throws IOException {
         return new Style()
                 .setFont(getBoldFont())
-                .setFontSize(12);
+                .setFontSize(14)
+                .setTextAlignment(TextAlignment.RIGHT)
+                .setFontColor(new DeviceRgb(33, 37, 41));
     }
+
 }

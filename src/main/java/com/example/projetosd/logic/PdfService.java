@@ -1,5 +1,7 @@
 package com.example.projetosd.logic;
 
+import com.example.projetosd.model.User;
+import com.itextpdf.layout.Style;
 import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -36,21 +38,21 @@ public class PdfService {
         Document doc = new Document(pdf);
         return doc;
     }
-    public Table createHeaderFile() throws IOException {
+    public Table createHeaderFile(InvoiceDTO invoiceDTO) throws IOException {
         // Create image
         ImageData imageData = ImageDataFactory.create("src/main/resources/static/images/TagusClassics.png");
         Image image = new Image(imageData).scaleToFit(100, 100).setHorizontalAlignment(HorizontalAlignment.RIGHT);
 
         // Create Table
-        Table topo = new Table(new float[]{2, 1});
-        topo.setWidth(UnitValue.createPercentValue(100));
+        Table topo = new Table(new float[]{2, 1})
+                .setWidth(UnitValue.createPercentValue(100));
 
         // Left Side Table
         Paragraph titulo = new Paragraph()
-                .add(new Text("FATURA #0001").addStyle(PdfStyles.boldStyle(31)))
+                .add(new Text("FATURA #"+ invoiceDTO.getPurchaseId()).addStyle(PdfStyles.boldStyle(31)))
                 .add("\n") // Quebra de linha
                 .add(new Text("Data de emissão: ").addStyle(PdfStyles.boldStyle(12)))
-                .add(new Text("27-10-2025").addStyle(PdfStyles.normalStyle(12)));
+                .add(new Text(invoiceDTO.getDate().toLocalDate().toString()).addStyle(PdfStyles.normalStyle(12)));
 
         Cell cellTexto = new Cell().add(titulo)
                 .setBorder(Border.NO_BORDER)
@@ -69,7 +71,7 @@ public class PdfService {
         return topo;
         
     }
-    public Table createInfo() throws IOException {
+    public Table createInfo(InvoiceDTO invoiceDTO) throws IOException {
         // Create Table
         Table tabelaLadoALado = new Table(UnitValue.createPercentArray(new float[]{2, 1}))
                 .useAllAvailableWidth()
@@ -77,13 +79,13 @@ public class PdfService {
 
         // Left Side Table
         Paragraph dadosCliente = new Paragraph()
-                .add(new Text("Jorge Rodrigues\n").addStyle(PdfStyles.boldStyle(17)))
+                .add(new Text(invoiceDTO.getCustomerName() + "\n").addStyle(PdfStyles.boldStyle(17)))
                 .add(new Text("NIF: ").addStyle(PdfStyles.boldStyle(12)))
-                .add(new Text("247445347\n").addStyle(PdfStyles.normalStyle(12)))
+                .add(new Text(invoiceDTO.getCustomerNif() + "\n").addStyle(PdfStyles.normalStyle(12)))
                 .add(new Text("EMAIL: ").addStyle(PdfStyles.boldStyle(12)))
-                .add(new Text("Jorge_Rodrigues@hotmail.com\n").addStyle(PdfStyles.normalStyle(12)))
+                .add(new Text(invoiceDTO.getCustomerEmail() + "\n").addStyle(PdfStyles.normalStyle(12)))
                 .add(new Text("Contacto: ").addStyle(PdfStyles.boldStyle(12)))
-                .add(new Text("926873163").addStyle(PdfStyles.normalStyle(12)))
+                .add(new Text(invoiceDTO.getCustomerTelemovel()).addStyle(PdfStyles.normalStyle(12)))
                 .setTextAlignment(TextAlignment.LEFT);
         tabelaLadoALado.addCell(new Cell().add(dadosCliente)
                         .setBorder(Border.NO_BORDER))
@@ -104,69 +106,106 @@ public class PdfService {
         return tabelaLadoALado;
     }
     
-    public Table createInvoiceTable() throws IOException {
+    public Table createInvoiceTable(InvoiceDTO invoiceDTO) throws IOException {
         Table tabelaServicos = new Table(UnitValue.createPercentArray(new float[]{1, 4, 1, 2, 2}))
                 .useAllAvailableWidth()
                 .setBorder(Border.NO_BORDER);
 
-        // Information
+
+        // Data
         tabelaServicos
-                .addHeaderCell(new Cell().add(new Paragraph("Id"))
+                .addHeaderCell(new Cell()
+                        .add(new Paragraph("Id"))
                         .addStyle(PdfStyles.headerStyle())
                         .setBorder(Border.NO_BORDER))
-                .addHeaderCell(new Cell().add(new Paragraph("Modelo"))
+
+                .addHeaderCell(new Cell()
+                        .add(new Paragraph("Produto"))
                         .addStyle(PdfStyles.headerStyle())
                         .setBorder(Border.NO_BORDER))
-                .addHeaderCell(new Cell().add(new Paragraph("Qnt"))
+
+                .addHeaderCell(new Cell()
+                        .add(new Paragraph("Qnt"))
                         .addStyle(PdfStyles.headerStyle())
                         .setBorder(Border.NO_BORDER))
-                .addHeaderCell(new Cell().add(new Paragraph("Preço"))
+
+                .addHeaderCell(new Cell()
+                        .add(new Paragraph("Preço Unit."))
                         .addStyle(PdfStyles.headerStyle())
                         .setBorder(Border.NO_BORDER))
-                .addHeaderCell(new Cell().add(new Paragraph("Total"))
+
+                .addHeaderCell(new Cell()
+                        .add(new Paragraph("Total"))
                         .addStyle(PdfStyles.headerStyle())
                         .setBorder(Border.NO_BORDER));
 
-        // Data
-        String[][] data = {
-                {"1", "Ford Mustang 1965", "1", "30,000 €", "30,000 €"},
-                {"2", "Chevrolet Camaro 1969", "2", "28,000 €", "56,000 €"},
-                {"3", "Volkswagen Beetle 1960", "3", "15,000 €", "45,000 €"},
-                {"4", "Porsche 911 1973", "1", "80,000 €", "80,000 €"}
-        };
+        int id = 1;
+        boolean zebra = false;
+        for (InvoiceItemDTO item : invoiceDTO.getItems()) {
+            Style rowStyle = zebra ? PdfStyles.zebraRowStyle() : PdfStyles.cellStyle();
+            zebra = !zebra;
 
-        for (String[] lines : data) {
-            for (String texto : lines) {
-                tabelaServicos.addCell(new Cell()
-                                .add(new Paragraph(texto))
-                                .addStyle(PdfStyles.cellStyle())
-                                .setTextAlignment(TextAlignment.CENTER));
-            }
+            tabelaServicos.addCell(new Cell().add(new Paragraph(String.valueOf(id++)))
+                    .addStyle(rowStyle)
+                    .setBorder(Border.NO_BORDER)
+                    .setTextAlignment(TextAlignment.CENTER));
+
+            tabelaServicos.addCell(new Cell().add(new Paragraph(item.getProductName()))
+                    .addStyle(rowStyle)
+                    .setBorder(Border.NO_BORDER)
+                    .setTextAlignment(TextAlignment.CENTER));
+
+            tabelaServicos.addCell(new Cell().add(new Paragraph(String.valueOf(item.getQuantity())))
+                    .addStyle(rowStyle)
+                    .setBorder(Border.NO_BORDER)
+                    .setTextAlignment(TextAlignment.CENTER));
+
+            tabelaServicos.addCell(new Cell().add(new Paragraph(String.format("%.2f €", item.getUnitPrice())))
+                    .addStyle(rowStyle)
+                    .setBorder(Border.NO_BORDER)
+                    .setTextAlignment(TextAlignment.RIGHT));
+
+            tabelaServicos.addCell(new Cell().add(new Paragraph(String.format("%.2f €", item.getTotalPrice())))
+                    .addStyle(rowStyle)
+                    .setBorder(Border.NO_BORDER)
+                    .setTextAlignment(TextAlignment.RIGHT));
         }
+
 
         return tabelaServicos;
     }
     
-    public Table createTotal() throws IOException {
+    public Table createTotal(InvoiceDTO invoiceDTO) throws IOException {
         // Create Table
         Table resumo = new Table(UnitValue.createPercentArray(new float[]{1, 1}))
                 .setWidth(UnitValue.createPercentValue(25))
                 .setMarginTop(20)
+                .setBorder(Border.NO_BORDER)
+                .setTextAlignment(TextAlignment.CENTER)
                 .setHorizontalAlignment(HorizontalAlignment.RIGHT);
 
-        resumo.addCell(new Cell().add(new Paragraph("Total:")).setBorder(Border.NO_BORDER).addStyle(PdfStyles.totalStyle()));
-        resumo.addCell(new Cell().add(new Paragraph("211,000 €")).setBorder(Border.NO_BORDER).addStyle(PdfStyles.totalStyle()));
+        resumo.addCell(new Cell()
+                .add(new Paragraph("Total:"))
+                .setBorder(Border.NO_BORDER)
+                .setTextAlignment(TextAlignment.CENTER)
+                .addStyle(PdfStyles.totalStyle()));
+
+        resumo.addCell(new Cell()
+                .add(new Paragraph(String.valueOf(Double.parseDouble(invoiceDTO.getTotalAmount())) + " €"))
+                .setBorder(Border.NO_BORDER)
+                .setTextAlignment(TextAlignment.CENTER)
+                .addStyle(PdfStyles.totalStyle()));
 
         return resumo;
     }
-    public void run() {
+    public void run(InvoiceDTO invoiceDTO) {
         try {
             // Create PDF Files
             Document doc = createPdfFiles();
             doc.setMargins(10, 10, 10, 10);
             
             // Header File
-            Table topo = createHeaderFile();
+            Table topo = createHeaderFile(invoiceDTO);
             doc.add(topo);
            
             //Space
@@ -184,29 +223,28 @@ public class PdfService {
             doc.add(new Paragraph("").setMarginTop(20));
             
             // Client and Company Information 
-            Table tabelaLadoALado = createInfo();
+            Table tabelaLadoALado = createInfo(invoiceDTO);
             doc.add(tabelaLadoALado);
             
             // Space
             doc.add(new Paragraph("").setMarginTop(20));
             
             // Invoice Information
-            Table tabelaServicos = createInvoiceTable();
+            Table tabelaServicos = createInvoiceTable(invoiceDTO);
             doc.add(tabelaServicos);
             
             // Final Price Information
-            Table resumo = createTotal();
+            Table resumo = createTotal(invoiceDTO);
             doc.add(resumo);
-            
-            // Space
-            doc.add(new Paragraph("").setMarginTop(20));
-            
-            
-            Paragraph nota = new Paragraph()
-                    .add(new Text("Nota:").addStyle(PdfStyles.boldStyle(12)));
 
-            doc.add(nota);
-            
+            Paragraph footer = new Paragraph("Obrigado pela sua preferência!")
+                    .addStyle(PdfStyles.boldStyle(10))
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setMarginTop(40);
+
+            doc.add(footer);
+
+
             // Close Document
             doc.close();
             System.out.println("✅ PDF criado com sucesso: " );
