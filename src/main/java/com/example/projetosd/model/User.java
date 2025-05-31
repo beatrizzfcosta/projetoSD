@@ -2,6 +2,7 @@ package com.example.projetosd.model;
 
 import jakarta.persistence.*;
 
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -81,6 +82,7 @@ public class User {
     }
 
     public void setSenha(String senha) {
+
         this.senha = senha;
     }
 

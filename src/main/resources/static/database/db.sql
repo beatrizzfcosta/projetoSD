@@ -24,6 +24,7 @@ CREATE TABLE users (
     userId        INT AUTO_INCREMENT PRIMARY KEY,
     roleId        INT,
     nome          VARCHAR(255) NOT NULL,
+    senha         VARCHAR(255) NOT NULL, -- coluna para adicionar palavraspass
     mail          VARCHAR(255) NOT NULL UNIQUE,
     nif           VARCHAR(255) UNIQUE,
     morada        VARCHAR(255),
