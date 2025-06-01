@@ -1,26 +1,24 @@
 package com.example.projetosd.controller;
 
-
 import com.example.projetosd.repository.ProductRepository;
 import com.example.projetosd.repository.UserRepository;
+import com.example.projetosd.repository.BrandRepository;
+import com.example.projetosd.repository.TypeRepository;
+import com.example.projetosd.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-<<<<<<< HEAD
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
-=======
 import com.example.projetosd.model.User;
 
 import java.security.Principal;
->>>>>>> f855e9e6d8831cc68072c92dd8dbf8609e789782
 
 @Controller
 @RequestMapping(value = "/loja")
@@ -29,6 +27,10 @@ public class LojaController {
     private ProductRepository prodRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private BrandRepository brandRepository;
+    @Autowired
+    private TypeRepository typeRepository;
 
     @GetMapping
     public String getLoja(
