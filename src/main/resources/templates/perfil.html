@@ -15,7 +15,6 @@
     <div th:replace="components/header :: header"></div>
 
     <div class="profile-wrapper">
-
         <div class="profile-container">
             <div class="profile-header">
                 <h2>Meu Perfil</h2>
@@ -92,18 +91,22 @@
                 <h3>Editar Perfil</h3>
                 <button class="close-button" onclick="closeEditModal()">&times;</button>
             </div>
-            <form class="edit-form" th:action="@{/perfil/atualizar}" method="post" th:object="${user}">
+            <form class="edit-form" th:action="@{/perfil/atualizar}" method="post" th:object="${user}" onsubmit="return handleSubmit(event)">
                 <div class="form-group">
                     <i class="fas fa-user"></i>
                     <input type="text" th:field="*{nome}" placeholder="Nome completo" required />
                 </div>
                 <div class="form-group">
                     <i class="fas fa-envelope"></i>
-                    <input type="email" th:field="*{mail}" placeholder="Email" required />
+                    <input type="email" th:field="*{mail}" placeholder="Email" required 
+                           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
+                           title="Por favor, insira um email válido (exemplo: exemplo@exemplo.com)" />
                 </div>
                 <div class="form-group">
                     <i class="fas fa-id-card"></i>
-                    <input type="text" th:field="*{nif}" placeholder="NIF (opcional)" />
+                    <input type="text" th:field="*{nif}" placeholder="NIF (opcional)" 
+                           pattern="[0-9]{9}" 
+                           title="O NIF deve conter exatamente 9 dígitos numéricos" />
                 </div>
                 <div class="form-group">
                     <i class="fas fa-home"></i>
@@ -111,7 +114,9 @@
                 </div>
                 <div class="form-group">
                     <i class="fas fa-map-marker-alt"></i>
-                    <input type="text" th:field="*{codigoPostal}" placeholder="Código Postal (opcional)" />
+                    <input type="text" th:field="*{codigoPostal}" placeholder="Código Postal (opcional)" 
+                           pattern="[0-9]{4}-[0-9]{3}" 
+                           title="O código postal deve estar no formato XXXX-XXX" />
                 </div>
                 <div class="form-group">
                     <i class="fas fa-globe"></i>
@@ -119,7 +124,9 @@
                 </div>
                 <div class="form-group">
                     <i class="fas fa-phone"></i>
-                    <input type="text" th:field="*{telefone}" placeholder="Telefone (opcional)" />
+                    <input type="text" th:field="*{telefone}" placeholder="Telefone (opcional)" 
+                           pattern="[0-9]{9}" 
+                           title="O telefone deve conter 9 dígitos numéricos" />
                 </div>
                 <div class="form-group">
                     <i class="fas fa-lock"></i>
@@ -129,7 +136,16 @@
                     <i class="fas fa-lock"></i>
                     <input type="password" name="confirmarSenha" placeholder="Confirmar nova senha (opcional)" />
                 </div>
-                <button type="submit" class="submit-btn">Salvar Alterações</button>
+                <div class="button-container">
+                    <button type="submit" class="submit-btn">Salvar Alterações</button>
+                    <!-- Container para mensagens -->
+                    <div id="messageContainer" class="message-container" style="display: none;">
+                        <div class="message-content">
+                            <span id="messageText"></span>
+                            <button onclick="closeMessage()" class="close-message">&times;</button>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -145,6 +161,27 @@
             modal.classList.remove('show');
         }
 
+        function showMessage(message, isSuccess) {
+            const container = document.getElementById('messageContainer');
+            const messageText = document.getElementById('messageText');
+            
+            container.style.display = 'block';
+            container.className = 'message-container ' + (isSuccess ? 'success' : 'error');
+            messageText.textContent = message;
+
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                if (container.style.display === 'block') {
+                    closeMessage();
+                }
+            }, 5000);
+        }
+
+        function closeMessage() {
+            const container = document.getElementById('messageContainer');
+            container.style.display = 'none';
+        }
+
         // Fechar o modal quando clicar fora dele
         window.onclick = function (event) {
             const modal = document.getElementById('editModal');
@@ -152,7 +189,39 @@
                 modal.classList.remove('show');
             }
         }
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showMessage(result.success, true);
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500); // Recarrega após 1.5 segundos para mostrar a mensagem
+                } else {
+                    showMessage(result.error || 'Erro ao atualizar perfil', false);
+                }
+            } catch (error) {
+                showMessage('Erro ao atualizar perfil. Por favor, tente novamente.', false);
+            }
+
+            return false;
+        }
     </script>
+
+    
+        
 </body>
 
 </html>

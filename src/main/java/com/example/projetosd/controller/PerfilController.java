@@ -4,11 +4,13 @@ import com.example.projetosd.model.User;
 import com.example.projetosd.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpSession;
+//import jakarta.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +25,12 @@ public class PerfilController {
     public String showProfile(Model model) {
         // TODO: Get the current logged-in user
         // For now, we'll use a mock user for testing
-        User user = userRepository.findById(1).orElse(null);
+        // User user = userRepository.findById(1).orElse(null);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        
+        User user = userRepository.findByMail(email);
         if (user != null) {
             model.addAttribute("user", user);
             return "perfil";
@@ -33,9 +40,14 @@ public class PerfilController {
 
     @PostMapping("/atualizar")
     @ResponseBody
-    public ResponseEntity<?> updateProfile(@ModelAttribute User updatedUser, HttpSession session) {
+    // public ResponseEntity<?> updateProfile(@ModelAttribute User updatedUser, HttpSession session) {
+    public ResponseEntity<?> updateProfile(@ModelAttribute User updatedUser) {
         try {
-            User currentUser = (User) session.getAttribute("user");
+            //User currentUser = (User) session.getAttribute("user");
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String email = auth.getName();
+            
+            User currentUser = userRepository.findByMail(email);
             if (currentUser == null) {
                 return ResponseEntity.badRequest().body("Usuário não autenticado");
             }
@@ -63,7 +75,7 @@ public class PerfilController {
             userRepository.save(currentUser);
             
             // Update session
-            session.setAttribute("user", currentUser);
+            //session.setAttribute("user", currentUser);
 
             Map<String, String> response = new HashMap<>();
             response.put("success", "Perfil atualizado com sucesso!");

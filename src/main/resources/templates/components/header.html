@@ -16,11 +16,21 @@
     <ul class="nav-links">
         <li><a href="/loja">Loja</a></li>
         <li><a href="/carrinho"><i class="fas fa-shopping-cart"></i></a></li>
-        <li class="dropdown">
+        <!-- Menu para usuários autenticados -->
+        <li class="dropdown" th:if="${#authorization.expression('isAuthenticated()')}">
             <a href="#" class="dropdown-toggle"><i class="fas fa-user"></i></a>
             <ul class="dropdown-menu">
                 <li><a href="/perfil">Perfil</a></li>
                 <li><a href="/historico">Histórico</a></li>
+                <li><a href="/logout" method="post" >Sair</a></li>
+            </ul>
+        </li>
+        <!-- Menu para usuários não autenticados -->
+        <li class="dropdown" th:unless="${#authorization.expression('isAuthenticated()')}">
+            <a href="#" class="dropdown-toggle"><i class="fas fa-user"></i></a>
+            <ul class="dropdown-menu">
+                <li><a href="/login">Login</a></li>
+                <li><a href="/registo">Registo</a></li>
             </ul>
         </li>
     </ul>
@@ -45,5 +55,22 @@
         window.addEventListener('scroll', checkScroll);
     });
 </script>
+
+<style>
+    .logout-btn {
+        background: none;
+        border: none;
+        color: inherit;
+        cursor: pointer;
+        padding: 8px 16px;
+        width: 100%;
+        text-align: left;
+        font-size: inherit;
+    }
+
+    .logout-btn:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+</style>
 </body>
 </html>
