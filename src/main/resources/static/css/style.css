@@ -52,6 +52,12 @@ body.index .navbar.scrolled {
     margin-left: 100px;
     color: black;
     position: relative;
+    text-decoration: none;
+    display: block;
+}
+
+.navbar .logo:hover {
+    text-decoration: none;
 }
 
 .navbar .logo img {
