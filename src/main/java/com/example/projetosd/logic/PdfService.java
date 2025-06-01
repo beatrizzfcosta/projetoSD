@@ -71,7 +71,7 @@ public class PdfService {
         try {
             ImageData imageData = ImageDataFactory.create("src/main/resources/static/images/logo-branco.png");
             Image logo = new Image(imageData)
-                    .scaleToFit(100, 100)
+                    .scaleToFit(115, 115)
                     .setMarginRight(30)
                     .setHorizontalAlignment(HorizontalAlignment.RIGHT);
 
@@ -217,7 +217,7 @@ public class PdfService {
                     .add(new Paragraph(unitPrice != null ? String.format("%.2f €", unitPrice.doubleValue()) : "—"))
                     .addStyle(rowStyle)
                     .setBorder(Border.NO_BORDER)
-                    .setTextAlignment(TextAlignment.RIGHT)
+                    .setTextAlignment(TextAlignment.CENTER)
                     .setPadding(8);
 
             // Total Price Cell
@@ -226,7 +226,7 @@ public class PdfService {
                     .addStyle(rowStyle)
                     .setFont(PdfStyles.getBoldFont())
                     .setBorder(Border.NO_BORDER)
-                    .setTextAlignment(TextAlignment.RIGHT)
+                    .setTextAlignment(TextAlignment.CENTER)
                     .setPadding(8);
 
             itemsTable.addCell(idCell);

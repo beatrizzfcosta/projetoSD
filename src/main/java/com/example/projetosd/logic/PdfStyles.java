@@ -188,14 +188,14 @@ public class PdfStyles {
     public static Style finalTotalLabelStyle() throws IOException {
         return new Style()
                 .setFont(getBoldFont())
-                .setFontSize(8)
+                .setFontSize(10)
                 .setFontColor(WHITE);
     }
 
     public static Style finalTotalValueStyle() throws IOException {
         return new Style()
                 .setFont(getBoldFont())
-                .setFontSize(10)
+                .setFontSize(11)
                 .setFontColor(ACCENT_COLOR);
     }
 

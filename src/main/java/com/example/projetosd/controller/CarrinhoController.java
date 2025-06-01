@@ -1,6 +1,7 @@
 package com.example.projetosd.controller;
 
 import com.example.projetosd.logic.Carrinho;
+import com.example.projetosd.logic.ProductFormDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,11 @@ import java.util.ArrayList;
 public class CarrinhoController {
 
     private ArrayList<Carrinho> carrinhos = new ArrayList<>();
+
+    @GetMapping
+    public String getAll () {
+        return "carrinho";
+    }
 
     @GetMapping("/{userId}")
     public String getCarrinho(@PathVariable long userId, Model model) {
