@@ -1,17 +1,14 @@
 package com.example.projetosd.controller;
 
-import com.example.projetosd.model.Brand;
-import com.example.projetosd.model.Color;
-import com.example.projetosd.model.Product;
-import com.example.projetosd.repository.BrandRepository;
-import com.example.projetosd.repository.ColorRepository;
+
 import com.example.projetosd.repository.ProductRepository;
-import com.example.projetosd.repository.TypeRepository;
+import com.example.projetosd.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+<<<<<<< HEAD
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
@@ -19,28 +16,35 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+=======
+import com.example.projetosd.model.User;
+
+import java.security.Principal;
+>>>>>>> f855e9e6d8831cc68072c92dd8dbf8609e789782
 
 @Controller
 @RequestMapping(value = "/loja")
 public class LojaController {
     @Autowired
     private ProductRepository prodRepository;
-
     @Autowired
-    private BrandRepository brandRepository;
-    @Autowired
-    private ColorRepository colorRepository;
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private TypeRepository typeRepository;
+    private UserRepository userRepository;
 
     @GetMapping
     public String getLoja(
         @RequestParam(required = false) String marca,
         @RequestParam(required = false) String tipo,
         @RequestParam(required = false) String preco,
+        Principal principal,
         Model model) {
+
+        String email = principal.getName();
+        User user = userRepository.findByMail(email);
+        Long userId = user.getUserId();
+
+        System.out.println("UserId: " + userId);
+
+        model.addAttribute("userId", userId);
         
         List<Product> products;
         
