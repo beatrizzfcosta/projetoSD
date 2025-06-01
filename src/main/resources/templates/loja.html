@@ -110,7 +110,8 @@
                             </div>
                         </div>
                     </a>
-                    <form th:action="@{/item/carrinho}" method="post">
+                    <form th:action="@{/loja/item/carrinho}" method="post">
+                        <input type="hidden" name="productId" th:value="${product.productId}" />
                         <button type="submit" class="ver-detalhes">Adicionar Produto</button>
                     </form>
                 </div>

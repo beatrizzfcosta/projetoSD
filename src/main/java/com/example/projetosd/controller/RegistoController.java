@@ -51,6 +51,8 @@ public class RegistoController {
                 return "registo";
             }
 
+            user.setSenha(user.getSenha());
+
             // Salvar o usuário
             userRepository.save(user);
             

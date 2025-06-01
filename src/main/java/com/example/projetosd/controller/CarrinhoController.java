@@ -1,56 +1,97 @@
 package com.example.projetosd.controller;
 
 import com.example.projetosd.logic.Carrinho;
-import com.example.projetosd.logic.ProductFormDTO;
+import com.example.projetosd.logic.CarrinhoWrapper;
+import com.example.projetosd.model.Product;
+import com.example.projetosd.model.User;
+import com.example.projetosd.repository.ProductRepository;
+import com.example.projetosd.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/carrinho")
 public class CarrinhoController {
 
-    private ArrayList<Carrinho> carrinhos = new ArrayList<>();
+    @Autowired
+    private ProductRepository productRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping
-    public String getAll () {
-        return "carrinho";
-    }
+    public String getCarrinho(Model model, Principal principal) {
+        String email = principal.getName();
+        User user = userRepository.findByMail(email);
+        Integer userId = user.getUserId().intValue();
 
-    @GetMapping("/{userId}")
-    public String getCarrinho(@PathVariable long userId, Model model) {
-        for (Carrinho c : carrinhos) {
-            if (c.getUserId() == userId) {
-                model.addAttribute("products", c.getProducts());
-                return "carrinho";
-            }
-        }
+        Carrinho carrinho = CarrinhoWrapper.getCarrinho(userId);
 
-        model.addAttribute("products", new ArrayList<>());
-        model.addAttribute("error", "Carrinho não encontrado.");
+        List<Integer> productIds = carrinho.getProducts();
+
+        List<Product> products = new ArrayList<>();
+        productRepository.findAllById(productIds).forEach(products::add);
+
+        model.addAttribute("products", products);
+        BigDecimal subtotal = products.stream()
+                .map(Product::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        model.addAttribute("subtotal", subtotal);
+
         return "carrinho";
     }
 
     @GetMapping("/{userId}/comprar")
-    public String comprar(@PathVariable long userId, Model model) {
-        for (int i = 0; i < carrinhos.size(); i++) {
-            Carrinho c = carrinhos.get(i);
-            if (c.getUserId() == userId) {
-                ArrayList<Long> products = c.getProducts();
-                carrinhos.remove(i);
+    public String comprar(Model model, Principal principal) {
+        String email = principal.getName();
+        User user = userRepository.findByMail(email);
+        Integer userId = user.getUserId().intValue();
 
-                model.addAttribute("message", "Compra efetuada com sucesso!");
-                model.addAttribute("products", products);
-
-                return "compra_sucesso"; // success page?
-            }
-        }
+        CarrinhoWrapper.removeCarrinho(userId);
 
         model.addAttribute("error", "Carrinho não encontrado.");
         return "index";
+    }
+
+    @PostMapping("/increment")
+    public String incrementProduct(@RequestParam("productId") Long productId , Model model, Principal principal) {
+        String email = principal.getName();
+        User user = userRepository.findByMail(email);
+        Integer userId = user.getUserId().intValue();
+
+        Carrinho carrinho = CarrinhoWrapper.getCarrinho(userId);
+        carrinho.addProduct(Math.toIntExact(productId));
+
+        return "carrinho";
+    }
+
+    @PostMapping("/decrement")
+    public String decrementProduct(@RequestParam("productId") Long productId , Model model, Principal principal) {
+        String email = principal.getName();
+        User user = userRepository.findByMail(email);
+        Integer userId = user.getUserId().intValue();
+
+        Carrinho carrinho = CarrinhoWrapper.getCarrinho(userId);
+        carrinho.removeProduct(Math.toIntExact(productId));
+
+        return "carrinho";
+    }
+
+    private Map<Integer, Integer> aggregateProducts(List<Integer> productIds) {
+        Map<Integer, Integer> quantityMap = new HashMap<>();
+
+        for (Integer prodId : productIds) {
+            quantityMap.put(prodId, quantityMap.getOrDefault(prodId, 0) + 1);
+        }
+
+        return quantityMap;
     }
 }

@@ -18,7 +18,7 @@
     <h2>Meu Carrinho</h2>
 </div>
 
-<div class="container">
+<div class="container" th:if="${not #lists.isEmpty(products)}">
     <div class="cart-list">
         <div class="cart-header">
             <span>Produto</span>
@@ -28,56 +28,51 @@
             <span>Total</span>
             <span></span>
         </div>
-        <!-- Item 1 -->
-        <div class="cart-row">
-            <img src="https://via.placeholder.com/120" class="product-image" alt="Carro">
+
+        <div class="cart-row" th:each="product : ${products}">
+            <img th:src="${product.imageURL}" class="product-image" alt="Imagem do produto">
+
             <div>
-                <div class="product-title">Volkswagen Golf 2020</div>
-                <div class="product-desc">Quilometragem: 45.000 km</div>
+                <div class="product-title" th:text="${product.name}">Nome do Produto</div>
+                <div class="product-desc" th:text="'Portas: ' + ${product.doorCount}">Detalhes</div>
             </div>
-            <div>R$ 85.000,00</div>
+
+            <span th:text="'R$ ' + ${#numbers.formatDecimal(subtotal, 0, 'COMMA', 2, 'POINT')}">R$ 0,00</span>
+
             <div class="quantity-control">
                 <button class="quantity-btn" type="button">-</button>
                 <input type="text" class="quantity-input" value="1" readonly>
                 <button class="quantity-btn" type="button">+</button>
             </div>
-            <div>R$ 85.000,00</div>
-            <i class="fas fa-times remove-btn" title="Remover item"></i>
-        </div>
-        <!-- Item 2 -->
-        <div class="cart-row">
-            <img src="https://via.placeholder.com/120" class="product-image" alt="Carro">
-            <div>
-                <div class="product-title">Toyota Corolla 2019</div>
-                <div class="product-desc">Quilometragem: 60.000 km</div>
-            </div>
-            <div>R$ 75.000,00</div>
-            <div class="quantity-control">
-                <button class="quantity-btn" type="button">-</button>
-                <input type="text" class="quantity-input" value="1" readonly>
-                <button class="quantity-btn" type="button">+</button>
-            </div>
-            <div>R$ 75.000,00</div>
+
+            <span th:text="'R$ ' + ${#numbers.formatDecimal(subtotal, 0, 'COMMA', 2, 'POINT')}">R$ 0,00</span>
+
             <i class="fas fa-times remove-btn" title="Remover item"></i>
         </div>
     </div>
+
     <div class="cart-summary">
         <h5>Resumo do Pedido</h5>
         <div class="summary-row">
             <span>Subtotal</span>
-            <span>R$ 160.000,00</span>
+            <span th:text="'R$ ' + ${#numbers.formatDecimal(subtotal, 0, 'COMMA', 2, 'POINT')}">R$ 0,00</span>
         </div>
         <div class="summary-row">
             <span>Taxas</span>
             <span>R$ 0,00</span>
         </div>
-
         <div class="summary-row total">
             <span>Total</span>
-            <span>R$ 160.000,00</span>
+            <span th:text="'R$ ' + ${#numbers.formatDecimal(subtotal, 0, 'COMMA', 2, 'POINT')}">R$ 0,00</span>
         </div>
-        <button class="checkout-btn">Finalizar Compra</button>
+        <form th:action="@{/carrinho/comprar}" method="get">
+            <button type="submit" class="checkout-btn">Finalizar Compra</button>
+        </form>
     </div>
+</div>
+
+<div class="container" th:if="${#lists.isEmpty(products)}">
+    <p>O carrinho está vazio.</p>
 </div>
 
 <!-- Footer -->

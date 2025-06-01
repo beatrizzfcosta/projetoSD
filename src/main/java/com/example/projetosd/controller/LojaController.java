@@ -1,5 +1,7 @@
 package com.example.projetosd.controller;
 
+import com.example.projetosd.logic.Carrinho;
+import com.example.projetosd.logic.CarrinhoWrapper;
 import com.example.projetosd.repository.ProductRepository;
 import com.example.projetosd.repository.UserRepository;
 import com.example.projetosd.repository.BrandRepository;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -84,5 +87,19 @@ public class LojaController {
         model.addAttribute("ListBrands", brandRepository.findAll());
         model.addAttribute("ListTypes", typeRepository.findAll());
         return "loja";
+    }
+
+    @PostMapping("/item/carrinho")
+    public String addToCarrinho(@RequestParam("productId") Long productId, Principal principal) {
+        String email = principal.getName();
+        User user = userRepository.findByMail(email);
+        Integer userId = user.getUserId().intValue();
+
+        Carrinho carrinho = CarrinhoWrapper.getCarrinho(userId);
+        carrinho.addProduct(productId.intValue());
+
+        System.out.println("Added prod:"+ productId.intValue());
+
+        return "redirect:/loja";
     }
 }
