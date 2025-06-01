@@ -174,15 +174,17 @@ body:not(.index) .navbar .nav-links a,
 }
 
 .nav-links .dropdown-menu a {
-    color: #003b49;
+    color: #003b49 !important;
     padding: 8px 16px;
     display: block;
     text-decoration: none;
     transition: background-color 0.3s;
+
 }
 
 .nav-links .dropdown-menu a:hover {
     background-color: #f5f5f5;
+    color: #003b49 !important;
 }
 
 /* Removendo a seta do dropdown */
