@@ -7,13 +7,29 @@
 }
 
 .product-card {
-    width: 30%;
-    background-color: #3a4656;
+    width: 280px;
+    background-color: white;
+    aspect-ratio: 1;
     padding: 10px;
     border-radius: 16px;
     text-align: center;
     font-size: 0.8rem;
     box-sizing: border-box;
+    text-decoration: none;
+    color: black;
+}
+
+.product-card img{
+    margin-bottom: 60px;
+}
+
+.product-card button{
+    border-radius: 4px;
+    border: none;
+    background-color: #003b49;
+    padding: 4px;
+    width: 80%;
+    color: white;
 }
 
 .product-card img {
