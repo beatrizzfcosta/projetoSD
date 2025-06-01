@@ -13,65 +13,204 @@ import com.itextpdf.layout.properties.TextAlignment;
 import java.io.IOException;
 
 public class PdfStyles {
-
     private static final String FONT_REGULAR_PATH = "src/main/resources/static/font/Montserrat-Regular.ttf";
     private static final String FONT_BOLD_PATH = "src/main/resources/static/font/Montserrat-Bold.ttf";
 
+    // Paleta de cores premium
+    private static final DeviceRgb PRIMARY_COLOR = new DeviceRgb(33, 37, 41);      // Cinza escuro
+    private static final DeviceRgb ACCENT_COLOR = new DeviceRgb(255, 193, 7);       // Dourado
+    private static final DeviceRgb LIGHT_COLOR = new DeviceRgb(248, 249, 250);      // Cinza claro
+    private static final DeviceRgb WHITE = new DeviceRgb(255, 255, 255);            // Branco
+    private static final DeviceRgb ZEBRA_COLOR = new DeviceRgb(200, 200, 200);      // Zebra suave
 
     public static PdfFont getRegularFont() throws IOException {
-        PdfFontFactory.register(FONT_REGULAR_PATH);
-        return PdfFontFactory.createRegisteredFont("Montserrat", PdfEncodings.IDENTITY_H);
+        try {
+            PdfFontFactory.register(FONT_REGULAR_PATH);
+            return PdfFontFactory.createRegisteredFont("Montserrat", PdfEncodings.IDENTITY_H);
+        } catch (Exception e) {
+            return PdfFontFactory.createFont(); // Fallback para fonte padrão
+        }
     }
 
     public static PdfFont getBoldFont() throws IOException {
-        PdfFontFactory.register(FONT_BOLD_PATH);
-        return PdfFontFactory.createRegisteredFont("Montserrat-Bold", PdfEncodings.IDENTITY_H);
+        try {
+            PdfFontFactory.register(FONT_BOLD_PATH);
+            return PdfFontFactory.createRegisteredFont("Montserrat-Bold", PdfEncodings.IDENTITY_H);
+        } catch (Exception e) {
+            return PdfFontFactory.createFont(); // Fallback para fonte padrão
+        }
     }
 
-    public static Style normalStyle(int size) throws IOException {
-        return new Style()
-                .setFont(getRegularFont())
-                .setFontSize(size);
-    }
+    // ========== ESTILOS DO HEADER ==========
 
-    public static Style boldStyle(int size) throws IOException {
-        return new Style()
-                .setFont(getBoldFont())
-                .setFontSize(size);
-    }
-
-    public static Style headerStyle() throws IOException {
+    public static Style heroTitleStyle() throws IOException {
         return new Style()
                 .setFont(getBoldFont())
-                .setFontSize(12)
-                .setTextAlignment(TextAlignment.CENTER)
-                .setFontColor(ColorConstants.WHITE)
-                .setBackgroundColor(new DeviceRgb(33, 37, 41)); // Cinza escuro
+                .setFontSize(18)
+                .setFontColor(WHITE)
+                .setMarginLeft(20)
+                .setTextAlignment(TextAlignment.LEFT);
     }
 
-    public static Style cellStyle() throws IOException {
+    public static Style invoiceNumberStyle() throws IOException {
+        return new Style()
+                .setFont(getBoldFont())
+                .setFontSize(16)
+                .setMarginLeft(20)
+                .setFontColor(ACCENT_COLOR)
+                .setTextAlignment(TextAlignment.LEFT);
+    }
+
+    public static Style labelStyle() throws IOException {
+        return new Style()
+                .setFont(getBoldFont())
+                .setFontSize(11)
+                .setMarginLeft(20)
+                .setFontColor(LIGHT_COLOR)
+                .setTextAlignment(TextAlignment.LEFT);
+    }
+
+    public static Style dateStyle() throws IOException {
         return new Style()
                 .setFont(getRegularFont())
-                .setFontSize(11)
-                .setBorderBottom(new SolidBorder(ColorConstants.LIGHT_GRAY, 0.5f))
-                .setPadding(5);
+                .setFontSize(10)
+                .setMarginLeft(20)
+                .setMarginBottom(15)
+                .setFontColor(WHITE)
+                .setTextAlignment(TextAlignment.LEFT);
     }
 
-    public static Style zebraRowStyle() throws IOException {
+    public static Style brandStyle() throws IOException {
+        return new Style()
+                .setFont(getBoldFont())
+                .setFontSize(10)
+                .setFontColor(ACCENT_COLOR)
+                .setTextAlignment(TextAlignment.RIGHT);
+    }
+
+    // ========== ESTILOS DE INFORMAÇÕES ==========
+
+    public static Style sectionHeaderStyle() throws IOException {
+        return new Style()
+                .setFont(getBoldFont())
+                .setFontSize(11)
+                .setFontColor(PRIMARY_COLOR)
+                .setTextAlignment(TextAlignment.LEFT);
+    }
+
+    public static Style clientNameStyle() throws IOException {
+        return new Style()
+                .setFont(getBoldFont())
+                .setFontSize(13)
+                .setFontColor(PRIMARY_COLOR)
+                .setTextAlignment(TextAlignment.LEFT);
+    }
+
+    public static Style clientDetailStyle() throws IOException {
         return new Style()
                 .setFont(getRegularFont())
-                .setFontSize(11)
-                .setBackgroundColor(new DeviceRgb(245, 245, 245))  // cinza claro
-                .setBorderBottom(new SolidBorder(ColorConstants.LIGHT_GRAY, 0.5f))
-                .setPadding(5);
+                .setFontSize(8)
+                .setFontColor(PRIMARY_COLOR)
+                .setTextAlignment(TextAlignment.LEFT);
     }
 
-    public static Style totalStyle() throws IOException {
+    public static Style companyNameStyle() throws IOException {
         return new Style()
                 .setFont(getBoldFont())
                 .setFontSize(14)
-                .setTextAlignment(TextAlignment.RIGHT)
-                .setFontColor(new DeviceRgb(33, 37, 41));
+                .setFontColor(PRIMARY_COLOR)
+                .setTextAlignment(TextAlignment.RIGHT);
+    }
+
+    public static Style companyDetailStyle() throws IOException {
+        return new Style()
+                .setFont(getRegularFont())
+                .setFontSize(8)
+                .setFontColor(PRIMARY_COLOR)
+                .setTextAlignment(TextAlignment.RIGHT);
+    }
+
+    // ========== ESTILOS DA TABELA ==========
+
+    public static Style premiumHeaderStyle() throws IOException {
+        return new Style()
+                .setFont(getBoldFont())
+                .setFontSize(8)
+                .setFontColor(WHITE)
+                .setBackgroundColor(PRIMARY_COLOR)
+                .setTextAlignment(TextAlignment.CENTER);
+    }
+
+    public static Style premiumCellStyle() throws IOException {
+        return new Style()
+                .setFont(getRegularFont())
+                .setFontSize(8)
+                .setFontColor(PRIMARY_COLOR)
+                .setBackgroundColor(WHITE)
+                .setBorderBottom(new SolidBorder(LIGHT_COLOR, 1));
+    }
+
+    public static Style premiumZebraRowStyle() throws IOException {
+        return new Style()
+                .setFont(getRegularFont())
+                .setFontSize(8)
+                .setFontColor(PRIMARY_COLOR)
+                .setBackgroundColor(ZEBRA_COLOR)
+                .setBorderBottom(new SolidBorder(LIGHT_COLOR, 1));
+    }
+
+    public static Style idBadgeStyle() throws IOException {
+        return new Style()
+                .setFont(getBoldFont())
+                .setFontSize(10)
+                .setFontColor(PRIMARY_COLOR)
+                .setBackgroundColor(ACCENT_COLOR);
+    }
+
+    // ========== ESTILOS DE RESUMO/TOTAL ==========
+
+    public static Style summaryLabelStyle() throws IOException {
+        return new Style()
+                .setFont(getRegularFont())
+                .setFontSize(8)
+                .setFontColor(PRIMARY_COLOR);
+    }
+
+    public static Style summaryValueStyle() throws IOException {
+        return new Style()
+                .setFont(getBoldFont())
+                .setFontSize(8)
+                .setFontColor(PRIMARY_COLOR);
+    }
+
+    public static Style finalTotalLabelStyle() throws IOException {
+        return new Style()
+                .setFont(getBoldFont())
+                .setFontSize(8)
+                .setFontColor(WHITE);
+    }
+
+    public static Style finalTotalValueStyle() throws IOException {
+        return new Style()
+                .setFont(getBoldFont())
+                .setFontSize(10)
+                .setFontColor(ACCENT_COLOR);
+    }
+
+    // ========== ESTILOS DE FOOTER ==========
+
+    public static Style footerStyle() throws IOException {
+        return new Style()
+                .setFont(getBoldFont())
+                .setFontSize(10)
+                .setFontColor(PRIMARY_COLOR);
+    }
+
+    public static Style footerSubtextStyle() throws IOException {
+        return new Style()
+                .setFont(getRegularFont())
+                .setFontSize(7)
+                .setFontColor(PRIMARY_COLOR);
     }
 
 }
