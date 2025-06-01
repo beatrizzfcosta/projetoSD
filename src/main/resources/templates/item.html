@@ -11,87 +11,68 @@
 </head>
 
 <body>
+    <!-- Navbar -->
+    <div th:replace="components/header :: header"></div>
 
-<!-- Navbar -->
-<div th:replace="components/header :: header"></div>
-
-<!-- Carrossel -->
-<section class="carousel-container">
-    <div class="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-items">
-                <div class="carousel-item">
-                    <img th:src="@{/images/yellow.png}" alt="Carro Amarelo" />
-                </div>
-                <div class="carousel-item">
-                    <img th:src="@{/images/red.png}" alt="Carro Vermelho" />
-                </div>
-                <div class="carousel-item">
-                    <img th:src="@{/images/white.png}" alt="Carro Branco" />
-                </div>
-                <div class="carousel-item">
-                    <img th:src="@{/images/beige.png}" alt="Carro Bege" />
+    <div class="container">
+        <div class="carro-detalhes-completo">
+            <div class="carro-galeria">
+                <div class="imagem-principal">
+                    <img th:src="${product.imageURL}" th:alt="${product.name}">
                 </div>
             </div>
-
-            <div class="carousel-indicators" id="carouselIndicators">
-                <div class="indicator" data-index="0"></div>
-                <div class="indicator" data-index="1"></div>
-                <div class="indicator" data-index="2"></div>
-                <div class="indicator" data-index="3"></div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-<div style="width: 100%; display: flex; justify-content: center">
-    <div id="cardInfo">
-        <h1 th:text="${product.name}"></h1>
-        <div id="price">
-            <img th:src="${product.imageURL}">
-            <div id="info">
-                <div>
-                    <span th:text="${product.price}"></span>
+            
+            <div class="carro-informacoes">
+                <h2 th:text="${product.name}"></h2>
+                <div class="preco">
+                    <span th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}"></span>
                     <span>€</span>
                 </div>
-                <div>
-                    <span style="font-weight: bold" >Descrição: </span>
-                    <span th:text="${product.description}"></span>
+
+                <div class="especificacoes">
+                    <div class="especificacao">
+                        <i class="fas fa-car"></i>
+                        <span>Marca</span>
+                        <strong th:text="${product.getBrand().getBrandName()}"></strong>
+                    </div>
+                    <div class="especificacao">
+                        <i class="fas fa-palette"></i>
+                        <span>Cor</span>
+                        <strong th:text="${product.getColor().getColorName()}"></strong>
+                    </div>
+                    <div class="especificacao">
+                        <i class="fas fa-door-open"></i>
+                        <span>Portas</span>
+                        <strong th:text="${product.doorCount}"></strong>
+                    </div>
+                    <div class="especificacao">
+                        <i class="fas fa-tag"></i>
+                        <span>Modelo</span>
+                        <strong th:text="${product.getType().getTypeName()}"></strong>
+                    </div>
                 </div>
-                <div >
-                    <span style="font-weight: bold" >Numero de Protas: </span>
-                    <span th:text="${product.doorCount}"></span>
+                <div class="descricao">
+                    <h3>Descrição</h3>
+                    <p th:text="${product.description}"></p>
                 </div>
-                <div >
-                    <span style="font-weight: bold" >Marca: </span>
-                    <span th:text="${product.getBrand().getBrandName()}"></span>
-                </div>
-                <div >
-                    <span style="font-weight: bold" >Cor: </span>
-                    <span th:text="${product.getColor().getColorName()}"></span>
-                </div>
-                <div >
-                    <span style="font-weight: bold" >Tipo: </span>
-                    <span th:text="${product.getType().getTypeName()}"></span>
+
+                <div class="acoes">
+                    <form th:action="@{/item/carrinho}" method="post">
+                        <button type="submit" class="adicionar-carrinho">
+                            <i class="fas fa-shopping-cart"></i>
+                            Adicionar ao Carrinho
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
-
     </div>
-</div>
 
+    <!-- Footer -->
+    <div th:replace="components/footer :: footer"></div>
 
-
-
-
-
-
-<!-- Footer -->
-<div th:replace="components/footer :: footer"></div>
-
-<script src="/js/script.js"></script>
-<div th:replace="components/header :: header-script"></div>
+    <script src="/js/script.js"></script>
+    <div th:replace="components/header :: header-script"></div>
 </body>
 
 </html>

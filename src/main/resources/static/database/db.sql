@@ -104,7 +104,8 @@ INSERT INTO brands (brandName, imageURL) VALUES
     ('mercedes', '/images/mercedes.png'),
     ('toyota', '/images/Toyota.png'),
     ('volkswagen', '/images/Volkswagen.png'),
-    ('porsche', '/images/porshe.png');
+    ('porsche', '/images/porshe.png'),
+    ('ford', '/images/ford.png');
 
 -- --------------------------------------------------------
 
@@ -137,10 +138,6 @@ CREATE TABLE purchaseProducts (
 );
 
 -- --------------------------------------------------------
-
--- Adicionando a marca Ford se não existir
-INSERT INTO brands (brandName, imageURL) VALUES ('ford', '/images/ford.png');
-
 
 INSERT INTO products (name, description, imageURL, doorCount, price, typeId, colorId, brandId)
 VALUES (

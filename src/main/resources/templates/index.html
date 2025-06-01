@@ -60,18 +60,6 @@
                   </div>
 
                   <div class="filter-group">
-                        <label>Ano</label>
-                        <select name="ano">
-                              <option value="">Todos os anos</option>
-                              <option value="1950-1960">1950 - 1960</option>
-                              <option value="1960-1970">1960 - 1970</option>
-                              <option value="1970-1980">1970 - 1980</option>
-                              <option value="1980-1990">1980 - 1990</option>
-                              <option value="1990+">1990+</option>
-                        </select>
-                  </div>
-
-                  <div class="filter-group">
                         <label>Marca</label>
                         <select name="marca">
                               <option value="">Todas as marcas</option>
@@ -80,13 +68,22 @@
                   </div>
 
                   <div class="filter-group">
+                        <label>Modelo</label>
+                        <select name="tipo">
+                              <option value="">Todos os modelos</option>
+                              <option th:each="type : ${ListTypes}" th:value="${type.typeName}" th:text="${type.typeName}"></option>
+                        </select>
+                  </div>
+
+                  <!-- <div class="filter-group">
                         <label>Transmissão</label>
                         <select name="transmissao">
                               <option value="">Todas</option>
                               <option value="manual">Manual</option>
                               <option value="automatico">Automático</option>
                         </select>
-                  </div>
+                  </div> -->
+
                   <button type="submit"><i class="fas fa-search"></i></button>
             </div>
       </form>
@@ -96,23 +93,23 @@
       <section class="brand-cards">
             <h2>Nossas Marcas</h2>
             <div class="cards-container">
-                  <div class="brand-card" th:each="brand : ${ListBrands}">
+                  <a class="brand-card" th:each="brand : ${ListBrands}" th:href="@{'/loja?marca=' + ${brand.brandName}}">
                         <img th:src="@{${brand.imageURL}}" th:alt="${brand.brandName}">
                         <h3 th:text="${brand.brandName}"></h3>
-                  </div>
+                  </a>
             </div>
       </section>
 
       <section class="car-types-cards">
-            <h2>Tipos de Carros</h2>
+            <h2>Modelos de Carros</h2>
             <div class="cards-container">
-                  <div class="type-card" th:each="type : ${ListTypes}">
+                  <a class="type-card" th:each="type : ${ListTypes}" th:href="@{'/loja?tipo=' + ${type.typeName}}">
                         <img th:src="@{${type.imageURL}}" th:alt="${type.typeName}">
                         <h3 th:text="${type.typeName}"></h3>
-                  </div>
+                  </a>
             </div>
       </section>
-
+      <!--  
       <section class="transmission-cards">
             <h2>Tipos de Transmissão</h2>
             <div class="cards-container">
@@ -126,6 +123,7 @@
                   </div>
             </div>
       </section>
+      -->
 </main>
 
 <!-- Footer -->
