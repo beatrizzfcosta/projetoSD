@@ -4,14 +4,15 @@ import com.example.projetosd.logic.InvoiceDTO;
 import com.example.projetosd.logic.InvoiceService;
 
 import com.example.projetosd.logic.PdfService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.ByteArrayOutputStream;
 
 @RestController
-@RequestMapping("/api/invoices")
+@RequestMapping("/invoices")
 public class InvoiceController {
 
     private final InvoiceService invoiceService;
@@ -21,13 +22,28 @@ public class InvoiceController {
         this.invoiceService = invoiceService;
     }
 
-    @GetMapping("/{purchaseId}")
-    public ResponseEntity<InvoiceDTO> getInvoice(@PathVariable Integer purchaseId) {
+    @PostMapping()
+    public ResponseEntity<byte[]> downloadInvoiceFromBody(@RequestBody InvoiceDTO request) {
+        Integer purchaseId = request.getPurchaseId();
         InvoiceDTO invoice = invoiceService.generateInvoice(purchaseId);
+        if (invoice == null) {
+            return ResponseEntity.notFound().build();
+        }
 
-        // Gerar o PDF logo depois de criar o DTO
-        pdfService.run(invoice);
+        ByteArrayOutputStream baos = pdfService.run(invoice);
+        if (baos == null) {
+            return ResponseEntity.internalServerError().build();
+        }
 
-        return ResponseEntity.ok(invoice);
+        byte[] pdfBytes = baos.toByteArray();
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"fatura_" + purchaseId + ".pdf\"")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdfBytes);
     }
+
+
+
+
 }

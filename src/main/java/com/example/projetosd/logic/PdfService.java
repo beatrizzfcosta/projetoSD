@@ -19,21 +19,23 @@ import org.springframework.stereotype.Service;
 import com.itextpdf.layout.element.LineSeparator;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 @Service
 public class PdfService {
     private static final String PATH = "src/main/java/com/example/projetosd/logic/ficheiro.pdf";
-    public Document createPdfFiles() throws IOException {
+    public Document createPdfFiles(ByteArrayOutputStream baos) throws IOException {
         // Garante que as pastas existem
         File file = new File(PATH);
         file.getParentFile().mkdirs();
 
         // Criação do PDF
-        FileOutputStream fos = new FileOutputStream(file);
-        PdfWriter writer = new PdfWriter(fos);
+        PdfWriter writer = new PdfWriter(baos);
         PdfDocument pdf = new PdfDocument(writer);
         Document doc = new Document(pdf);
         return doc;
@@ -77,15 +79,21 @@ public class PdfService {
                 .useAllAvailableWidth()
                 .setBorder(Border.NO_BORDER);
 
+        // Obter dados do DTO e tratar null
+        String nome = invoiceDTO.getCustomerName() != null ? invoiceDTO.getCustomerName() : "";
+        String mail = invoiceDTO.getCustomerEmail() != null ? invoiceDTO.getCustomerEmail() : "";
+        String nif = invoiceDTO.getCustomerNif() != null ? invoiceDTO.getCustomerNif() : "";
+        String telefone = invoiceDTO.getCustomerTelemovel() != null ? invoiceDTO.getCustomerTelemovel() : "";
+
         // Left Side Table
         Paragraph dadosCliente = new Paragraph()
-                .add(new Text(invoiceDTO.getCustomerName() + "\n").addStyle(PdfStyles.boldStyle(17)))
+                .add(new Text(nome + "\n").addStyle(PdfStyles.boldStyle(17)))
                 .add(new Text("NIF: ").addStyle(PdfStyles.boldStyle(12)))
-                .add(new Text(invoiceDTO.getCustomerNif() + "\n").addStyle(PdfStyles.normalStyle(12)))
+                .add(new Text(nif + "\n").addStyle(PdfStyles.normalStyle(12)))
                 .add(new Text("EMAIL: ").addStyle(PdfStyles.boldStyle(12)))
-                .add(new Text(invoiceDTO.getCustomerEmail() + "\n").addStyle(PdfStyles.normalStyle(12)))
+                .add(new Text(mail + "\n").addStyle(PdfStyles.normalStyle(12)))
                 .add(new Text("Contacto: ").addStyle(PdfStyles.boldStyle(12)))
-                .add(new Text(invoiceDTO.getCustomerTelemovel()).addStyle(PdfStyles.normalStyle(12)))
+                .add(new Text(telefone).addStyle(PdfStyles.normalStyle(12)))
                 .setTextAlignment(TextAlignment.LEFT);
         tabelaLadoALado.addCell(new Cell().add(dadosCliente)
                         .setBorder(Border.NO_BORDER))
@@ -139,33 +147,41 @@ public class PdfService {
                         .addStyle(PdfStyles.headerStyle())
                         .setBorder(Border.NO_BORDER));
 
+
+
         int id = 1;
         boolean zebra = false;
         for (InvoiceItemDTO item : invoiceDTO.getItems()) {
             Style rowStyle = zebra ? PdfStyles.zebraRowStyle() : PdfStyles.cellStyle();
             zebra = !zebra;
 
+            String productName = item.getProductName() != null ? item.getProductName() : "—";
+            String quantity = item.getQuantity() != null ? String.valueOf(item.getQuantity()) : "—";
+
+            BigDecimal unitPrice = item.getUnitPrice();
+            BigDecimal totalPrice = item.getTotalPrice();
+
             tabelaServicos.addCell(new Cell().add(new Paragraph(String.valueOf(id++)))
                     .addStyle(rowStyle)
                     .setBorder(Border.NO_BORDER)
                     .setTextAlignment(TextAlignment.CENTER));
 
-            tabelaServicos.addCell(new Cell().add(new Paragraph(item.getProductName()))
+            tabelaServicos.addCell(new Cell().add(new Paragraph(productName))
                     .addStyle(rowStyle)
                     .setBorder(Border.NO_BORDER)
                     .setTextAlignment(TextAlignment.CENTER));
 
-            tabelaServicos.addCell(new Cell().add(new Paragraph(String.valueOf(item.getQuantity())))
+            tabelaServicos.addCell(new Cell().add(new Paragraph(String.valueOf(quantity)))
                     .addStyle(rowStyle)
                     .setBorder(Border.NO_BORDER)
                     .setTextAlignment(TextAlignment.CENTER));
 
-            tabelaServicos.addCell(new Cell().add(new Paragraph(String.format("%.2f €", item.getUnitPrice())))
+            tabelaServicos.addCell(new Cell().add(new Paragraph(unitPrice != null ? String.format("%.2f €", unitPrice.doubleValue()) : "—"))
                     .addStyle(rowStyle)
                     .setBorder(Border.NO_BORDER)
                     .setTextAlignment(TextAlignment.RIGHT));
 
-            tabelaServicos.addCell(new Cell().add(new Paragraph(String.format("%.2f €", item.getTotalPrice())))
+            tabelaServicos.addCell(new Cell().add(new Paragraph(totalPrice != null ? String.format("%.2f €", totalPrice.doubleValue()) : "—"))
                     .addStyle(rowStyle)
                     .setBorder(Border.NO_BORDER)
                     .setTextAlignment(TextAlignment.RIGHT));
@@ -198,19 +214,21 @@ public class PdfService {
 
         return resumo;
     }
-    public void run(InvoiceDTO invoiceDTO) {
+    public ByteArrayOutputStream run(InvoiceDTO invoiceDTO) {
+
         try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
             // Create PDF Files
-            Document doc = createPdfFiles();
+            Document doc = createPdfFiles(baos);
             doc.setMargins(10, 10, 10, 10);
-            
+
             // Header File
             Table topo = createHeaderFile(invoiceDTO);
             doc.add(topo);
-           
+
             //Space
             doc.add(new Paragraph("").setMarginTop(5));
-            
+
             // Line
             SolidLine solidLine = new SolidLine(2);
             solidLine.setColor(ColorConstants.BLACK);
@@ -218,21 +236,21 @@ public class PdfService {
             LineSeparator linha = new LineSeparator(solidLine);
 
             doc.add(linha);
-            
+
             // Space
             doc.add(new Paragraph("").setMarginTop(20));
-            
+
             // Client and Company Information 
             Table tabelaLadoALado = createInfo(invoiceDTO);
             doc.add(tabelaLadoALado);
-            
+
             // Space
             doc.add(new Paragraph("").setMarginTop(20));
-            
+
             // Invoice Information
             Table tabelaServicos = createInvoiceTable(invoiceDTO);
             doc.add(tabelaServicos);
-            
+
             // Final Price Information
             Table resumo = createTotal(invoiceDTO);
             doc.add(resumo);
@@ -247,10 +265,13 @@ public class PdfService {
 
             // Close Document
             doc.close();
-            System.out.println("✅ PDF criado com sucesso: " );
+            System.out.println("✅ PDF criado com sucesso: ");
 
+            return baos;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
+
     }
 }
