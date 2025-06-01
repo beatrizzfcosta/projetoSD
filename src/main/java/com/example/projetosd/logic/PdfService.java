@@ -32,10 +32,8 @@ import java.math.BigDecimal;
 public class PdfService {
     private static final String PATH = "src/main/java/com/example/projetosd/logic/ficheiro.pdf";
 
-    // Cores do tema
-    private static final DeviceRgb PRIMARY_COLOR = new DeviceRgb(33, 37, 41); // Azul elegante
-    private static final DeviceRgb ACCENT_COLOR = new DeviceRgb(33, 37, 41); // Dourado
-    private static final DeviceRgb DARK_GRAY = new DeviceRgb(33, 37, 41);
+    // Colors
+    private static final DeviceRgb PRIMARY_COLOR = new DeviceRgb(33, 37, 41); // Cinza escuro
     private static final DeviceRgb LIGHT_GRAY = new DeviceRgb(248, 249, 250);
 
     public Document createPdfFiles(ByteArrayOutputStream baos) throws IOException {
@@ -49,12 +47,12 @@ public class PdfService {
     }
 
     public Table createHeaderFile(InvoiceDTO invoiceDTO) throws IOException {
-        // Header com gradiente visual
+        // Header
         Table headerTable = new Table(new float[]{1f, 1f})
                 .setWidth(UnitValue.createPercentValue(100))
                 .setBackgroundColor(PRIMARY_COLOR);
 
-        // Lado esquerdo - Informações da fatura
+        // Left Side
         Paragraph invoiceInfo = new Paragraph()
                 .add(new Text("FATURA").addStyle(PdfStyles.heroTitleStyle()))
                 .add("\n")
@@ -69,7 +67,7 @@ public class PdfService {
                 .setBorder(Border.NO_BORDER)
                 .setVerticalAlignment(VerticalAlignment.MIDDLE);
 
-        // Lado direito - Logo com estilo
+        // Right Side
         try {
             ImageData imageData = ImageDataFactory.create("src/main/resources/static/images/logo-branco.png");
             Image logo = new Image(imageData)
@@ -86,7 +84,6 @@ public class PdfService {
             headerTable.addCell(leftCell);
             headerTable.addCell(rightCell);
         } catch (Exception e) {
-            // Se não conseguir carregar a imagem, adiciona texto estilizado
             Paragraph brandText = new Paragraph("TAGUS CLASSICS")
                     .addStyle(PdfStyles.brandStyle())
                     .setTextAlignment(TextAlignment.RIGHT);
@@ -110,7 +107,7 @@ public class PdfService {
                 .setMarginTop(30)
                 .setBorder(Border.NO_BORDER);
 
-        // Dados do cliente com card estilizado
+        // Client Data
         String nome = invoiceDTO.getCustomerName() != null ? invoiceDTO.getCustomerName() : "";
         String mail = invoiceDTO.getCustomerEmail() != null ? invoiceDTO.getCustomerEmail() : "";
         String nif = invoiceDTO.getCustomerNif() != null ? invoiceDTO.getCustomerNif() : "";
@@ -128,11 +125,11 @@ public class PdfService {
 
         Cell clientCell = new Cell()
                 .add(clientInfo)
-                .setBorder(new SolidBorder(ACCENT_COLOR, 2))
+                .setBorder(new SolidBorder(PRIMARY_COLOR, 2))
                 .setBackgroundColor(LIGHT_GRAY)
                 .setPadding(15);
 
-        // Dados da empresa
+        // Company Data
         Paragraph companyInfo = new Paragraph()
                 .add(new Text("TAGUS CLASSICS").addStyle(PdfStyles.companyNameStyle()))
                 .add("\n\n")
@@ -162,7 +159,7 @@ public class PdfService {
                 .setMarginTop(30)
                 .setBorder(Border.NO_BORDER);
 
-        // Cabeçalho da tabela com estilo premium
+        // Top Table
         String[] headers = {"#", "Produto", "Qtd", "Preço Unit.", "Total"};
         for (String header : headers) {
             Cell headerCell = new Cell()
@@ -173,7 +170,7 @@ public class PdfService {
             itemsTable.addHeaderCell(headerCell);
         }
 
-        // Linhas dos produtos com efeito zebra melhorado
+        // Products Cells
         int id = 1;
         boolean zebra = false;
         BigDecimal subtotal = BigDecimal.ZERO;
@@ -191,7 +188,7 @@ public class PdfService {
                 subtotal = subtotal.add(totalPrice);
             }
 
-            // Célula ID com badge
+            // First Cell
             Cell idCell = new Cell()
                     .add(new Paragraph(String.valueOf(id++)))
                     .addStyle(PdfStyles.idBadgeStyle())
@@ -199,7 +196,7 @@ public class PdfService {
                     .setTextAlignment(TextAlignment.CENTER)
                     .setPadding(8);
 
-            // Célula produto com destaque
+            // Product Cell
             Cell productCell = new Cell()
                     .add(new Paragraph(productName))
                     .addStyle(rowStyle)
@@ -207,6 +204,7 @@ public class PdfService {
                     .setBorder(Border.NO_BORDER)
                     .setPadding(8);
 
+            // Quantity Cell
             Cell quantityCell = new Cell()
                     .add(new Paragraph(quantity))
                     .addStyle(rowStyle)
@@ -214,6 +212,7 @@ public class PdfService {
                     .setTextAlignment(TextAlignment.CENTER)
                     .setPadding(8);
 
+            // Unit Price Cell
             Cell unitPriceCell = new Cell()
                     .add(new Paragraph(unitPrice != null ? String.format("%.2f €", unitPrice.doubleValue()) : "—"))
                     .addStyle(rowStyle)
@@ -221,6 +220,7 @@ public class PdfService {
                     .setTextAlignment(TextAlignment.RIGHT)
                     .setPadding(8);
 
+            // Total Price Cell
             Cell totalCell = new Cell()
                     .add(new Paragraph(totalPrice != null ? String.format("%.2f €", totalPrice.doubleValue()) : "—"))
                     .addStyle(rowStyle)
@@ -262,7 +262,7 @@ public class PdfService {
                 .setMinWidth(80)
                 .setTextAlignment(TextAlignment.RIGHT));
 
-        // IVA (exemplo)
+        // IVA
         double iva = Double.parseDouble(invoiceDTO.getTotalAmount()) * 0.23;
         totalTable.addCell(new Cell()
                 .add(new Paragraph("IVA (23%)"))
@@ -278,7 +278,7 @@ public class PdfService {
                 .setMinWidth(80)
                 .setTextAlignment(TextAlignment.RIGHT));
 
-        // Total final com destaque
+        // Total final
         double totalFinal = Double.parseDouble(invoiceDTO.getTotalAmount()) + iva;
 
         Cell totalLabelCell = new Cell()
@@ -309,21 +309,21 @@ public class PdfService {
             Document doc = createPdfFiles(baos);
             doc.setMargins(0, 20, 20, 20);
 
-            // Header premium
+            // Header
             Table header = createHeaderFile(invoiceDTO);
             doc.add(header);
 
-            // Informações do cliente e empresa
+            // Information Client & Company
             Table info = createInfo(invoiceDTO);
             doc.add(info);
 
-            // Tabela de produtos
+            // Products Table
             Table itemsTable = createInvoiceTable(invoiceDTO);
             doc.add(itemsTable);
 
-            // Linha separadora elegante
+            // Line
             SolidLine decorativeLine = new SolidLine(3);
-            decorativeLine.setColor(ACCENT_COLOR);
+            decorativeLine.setColor(PRIMARY_COLOR);
             LineSeparator separator = new LineSeparator(decorativeLine);
             separator.setMarginTop(20);
             doc.add(separator);
@@ -332,7 +332,7 @@ public class PdfService {
             Table totalTable = createTotal(invoiceDTO);
             doc.add(totalTable);
 
-            // Footer estilizado
+            // Footer
             Paragraph footer = new Paragraph()
                     .add(new Text("Obrigado pela sua preferência!").addStyle(PdfStyles.footerStyle()))
                     .add("\n")
@@ -341,12 +341,12 @@ public class PdfService {
                     .setMarginTop(40)
                     .setPadding(20)
                     .setBackgroundColor(LIGHT_GRAY)
-                    .setBorder(new SolidBorder(ACCENT_COLOR, 2));
+                    .setBorder(new SolidBorder(PRIMARY_COLOR, 2));
 
             doc.add(footer);
 
             doc.close();
-            System.out.println("✅ PDF Premium criado com sucesso!");
+            System.out.println("Invoice created!");
 
             return baos;
         } catch (Exception e) {

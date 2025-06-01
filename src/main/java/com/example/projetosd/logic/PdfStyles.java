@@ -16,19 +16,21 @@ public class PdfStyles {
     private static final String FONT_REGULAR_PATH = "src/main/resources/static/font/Montserrat-Regular.ttf";
     private static final String FONT_BOLD_PATH = "src/main/resources/static/font/Montserrat-Bold.ttf";
 
-    // Paleta de cores premium
+    // Colors
     private static final DeviceRgb PRIMARY_COLOR = new DeviceRgb(33, 37, 41);      // Cinza escuro
     private static final DeviceRgb ACCENT_COLOR = new DeviceRgb(255, 193, 7);       // Dourado
     private static final DeviceRgb LIGHT_COLOR = new DeviceRgb(248, 249, 250);      // Cinza claro
     private static final DeviceRgb WHITE = new DeviceRgb(255, 255, 255);            // Branco
     private static final DeviceRgb ZEBRA_COLOR = new DeviceRgb(200, 200, 200);      // Zebra suave
 
+
+    // ========== FONT STYLE ==========
     public static PdfFont getRegularFont() throws IOException {
         try {
             PdfFontFactory.register(FONT_REGULAR_PATH);
             return PdfFontFactory.createRegisteredFont("Montserrat", PdfEncodings.IDENTITY_H);
         } catch (Exception e) {
-            return PdfFontFactory.createFont(); // Fallback para fonte padrão
+            return PdfFontFactory.createFont();
         }
     }
 
@@ -37,11 +39,11 @@ public class PdfStyles {
             PdfFontFactory.register(FONT_BOLD_PATH);
             return PdfFontFactory.createRegisteredFont("Montserrat-Bold", PdfEncodings.IDENTITY_H);
         } catch (Exception e) {
-            return PdfFontFactory.createFont(); // Fallback para fonte padrão
+            return PdfFontFactory.createFont();
         }
     }
 
-    // ========== ESTILOS DO HEADER ==========
+    // ========== HEADER STYLE ==========
 
     public static Style heroTitleStyle() throws IOException {
         return new Style()
@@ -88,7 +90,7 @@ public class PdfStyles {
                 .setTextAlignment(TextAlignment.RIGHT);
     }
 
-    // ========== ESTILOS DE INFORMAÇÕES ==========
+    // ========== INFORMATION STYLE ==========
 
     public static Style sectionHeaderStyle() throws IOException {
         return new Style()
@@ -130,7 +132,7 @@ public class PdfStyles {
                 .setTextAlignment(TextAlignment.RIGHT);
     }
 
-    // ========== ESTILOS DA TABELA ==========
+    // ========== TABLE STYLE ==========
 
     public static Style premiumHeaderStyle() throws IOException {
         return new Style()
@@ -167,7 +169,7 @@ public class PdfStyles {
                 .setBackgroundColor(ACCENT_COLOR);
     }
 
-    // ========== ESTILOS DE RESUMO/TOTAL ==========
+    // ========== RESUME/TOTAL STYLE ==========
 
     public static Style summaryLabelStyle() throws IOException {
         return new Style()
@@ -197,7 +199,7 @@ public class PdfStyles {
                 .setFontColor(ACCENT_COLOR);
     }
 
-    // ========== ESTILOS DE FOOTER ==========
+    // ========== FOOTER STYLE ==========
 
     public static Style footerStyle() throws IOException {
         return new Style()
