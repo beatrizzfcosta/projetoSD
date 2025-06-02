@@ -64,21 +64,21 @@ public class LojaController {
         if (preco != null && !preco.isEmpty()) {
             products = products.stream()
                 .filter(product -> {
-                    BigDecimal price = product.getPrice();
+                    double price = product.getPrice();
+
                     switch (preco) {
                         case "0-50000":
-                            return price.compareTo(new BigDecimal("50000")) <= 0;
+                            return price <= 50000;
                         case "50000-100000":
-                            return price.compareTo(new BigDecimal("50000")) > 0 && 
-                                   price.compareTo(new BigDecimal("100000")) <= 0;
+                            return price > 50000 && price <= 100000;
                         case "100000-200000":
-                            return price.compareTo(new BigDecimal("100000")) > 0 && 
-                                   price.compareTo(new BigDecimal("200000")) <= 0;
+                            return price > 100000 && price <= 200000;
                         case "200000+":
-                            return price.compareTo(new BigDecimal("200000")) > 0;
+                            return price > 200000;
                         default:
                             return true;
                     }
+
                 })
                 .collect(Collectors.toList());
         }

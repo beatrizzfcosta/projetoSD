@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title th:replace="components/header :: title">Carrinho de Compras</title>
+    <div th:replace="~{components/header :: header-script}"></div>
     <link rel="stylesheet" th:href="@{/css/carrinho-style.css}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" th:href="@{/css/style.css}" />
@@ -12,13 +12,13 @@
 
 <body>
 <!-- Navbar -->
-<div th:replace="components/header :: header"></div>
+<div th:replace="~{components/header :: header}"></div>
 
 <div class="title-container">
     <h2>Meu Carrinho</h2>
 </div>
 
-<div class="container" th:if="${not #lists.isEmpty(products)}">
+<div class="container" th:if="${not #lists.isEmpty(productWithQty)}">
     <div class="cart-list">
         <div class="cart-header">
             <span>Produto</span>
@@ -29,25 +29,37 @@
             <span></span>
         </div>
 
-        <div class="cart-row" th:each="product : ${products}">
-            <img th:src="${product.imageURL}" class="product-image" alt="Imagem do produto">
+        <div class="cart-row" th:each="entry : ${productWithQty}">
+            <img th:src="${entry.key.imageURL}" class="product-image" alt="Imagem do produto">
 
             <div>
-                <div class="product-title" th:text="${product.name}">Nome do Produto</div>
-                <div class="product-desc" th:text="'Portas: ' + ${product.doorCount}">Detalhes</div>
+                <div class="product-title" th:text="${entry.key.name}">Nome do Produto</div>
+                <div class="product-desc" th:text="'Portas: ' + ${entry.key.doorCount}">Detalhes</div>
             </div>
 
-            <span th:text="'R$ ' + ${#numbers.formatDecimal(subtotal, 0, 'COMMA', 2, 'POINT')}">R$ 0,00</span>
+            <!-- Preço unitário -->
+            <span th:text=" ${#numbers.formatDecimal(entry.key.price.doubleValue(), 0, 'COMMA', 2, 'POINT')}+ ' €'"> 0 €</span>
 
+             <!-- Quantidade -->
             <div class="quantity-control">
-                <button class="quantity-btn" type="button">-</button>
-                <input type="text" class="quantity-input" value="1" readonly>
-                <button class="quantity-btn" type="button">+</button>
+                <form th:action="@{/carrinho/decrement}" method="post">
+                    <input type="hidden" name="productId" th:value="${entry.key.productId}">
+                    <button class="quantity-btn" type="submit">-</button>
+                </form>
+                <input type="text" class="quantity-input" th:value="${entry.value}" readonly>
+                <form th:action="@{/carrinho/increment}" method="post">
+                    <input type="hidden" name="productId" th:value="${entry.key.productId}">
+                    <button class="quantity-btn" type="submit">+</button>
+                </form>
+
             </div>
 
-            <span th:text="'R$ ' + ${#numbers.formatDecimal(subtotal, 0, 'COMMA', 2, 'POINT')}">R$ 0,00</span>
-
-            <i class="fas fa-times remove-btn" title="Remover item"></i>
+            <!-- Total por item -->
+            <span th:text=" ${#numbers.formatDecimal(entry.key.price.doubleValue() * entry.value, 0, 'COMMA', 2, 'POINT')}+ ' €'"> 0€</span>
+            <form th:action="@{/carrinho/remove}" method="post">
+                <input type="hidden" name="productId" th:value="${entry.key.productId}">
+                <button type="submit" class="fas fa-times remove-btn" title="Remover item"></button>
+            </form>
         </div>
     </div>
 
@@ -55,23 +67,25 @@
         <h5>Resumo do Pedido</h5>
         <div class="summary-row">
             <span>Subtotal</span>
-            <span th:text="'R$ ' + ${#numbers.formatDecimal(subtotal, 0, 'COMMA', 2, 'POINT')}">R$ 0,00</span>
+            <span th:text="${#numbers.formatDecimal(subtotal.doubleValue(), 0, 'COMMA', 2, 'POINT')} + ' €'"> 0 €</span>
         </div>
         <div class="summary-row">
-            <span>Taxas</span>
-            <span>R$ 0,00</span>
+            <span>IVA (23%)</span>
+            <span th:text="${#numbers.formatDecimal(subtotal.doubleValue() * 0.23, 0, 'COMMA', 2, 'POINT')} + ' €'"> 0 €</span>
         </div>
         <div class="summary-row total">
             <span>Total</span>
-            <span th:text="'R$ ' + ${#numbers.formatDecimal(subtotal, 0, 'COMMA', 2, 'POINT')}">R$ 0,00</span>
+            <span th:text="${#numbers.formatDecimal(subtotal.doubleValue() * 1.23, 0, 'COMMA', 2, 'POINT')} + ' €'"> 0 €</span>
         </div>
-        <form th:action="@{/carrinho/comprar}" method="get">
+
+        <form th:action="@{/carrinho/comprar}" method="post">
             <button type="submit" class="checkout-btn">Finalizar Compra</button>
         </form>
     </div>
+
 </div>
 
-<div class="container" th:if="${#lists.isEmpty(products)}">
+<div class="container" th:if="${#lists.isEmpty(productWithQty)}">
     <p>O carrinho está vazio.</p>
 </div>
 
@@ -79,29 +93,8 @@
 <div th:replace="components/footer :: footer"></div>
 
 <script src="/js/script.js"></script>
-<div th:replace="components/header :: header-script"></div>
-<script>
-    // Adicionar funcionalidade aos botões de quantidade
-    document.querySelectorAll('.quantity-control button').forEach(button => {
-        button.addEventListener('click', function() {
-            const input = this.parentElement.querySelector('input');
-            const currentValue = parseInt(input.value);
+<div th:replace="~{components/header :: header-script}"></div>
 
-            if (this.textContent === '+') {
-                input.value = currentValue + 1;
-            } else if (currentValue > 1) {
-                input.value = currentValue - 1;
-            }
-        });
-    });
-
-    // Adicionar funcionalidade aos botões de remover
-    document.querySelectorAll('.remove-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            this.closest('.cart-row').remove();
-        });
-    });
-</script>
 </body>
 
 </html>

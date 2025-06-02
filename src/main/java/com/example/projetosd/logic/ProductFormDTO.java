@@ -7,7 +7,7 @@ public class ProductFormDTO {
     private String description;
     private String imageURL;
     private int doorCount;
-    private BigDecimal price;
+    private Double price;
     private Integer typeId;
     private Integer colorId;
     private Integer brandId;
@@ -24,7 +24,7 @@ public class ProductFormDTO {
         return imageURL;
     }
 
-    public BigDecimal getPrice() {
+    public Double getPrice() {
         return price;
     }
 
@@ -60,7 +60,7 @@ public class ProductFormDTO {
         this.doorCount = doorCount;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

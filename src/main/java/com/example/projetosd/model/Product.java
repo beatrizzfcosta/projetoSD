@@ -28,7 +28,7 @@ public class Product {
     private Integer doorCount;
 
     @Column(name = "price", nullable = false)
-    private BigDecimal price;
+    private Double price;
 
     @ManyToOne
     @JoinColumn(name = "typeId")
@@ -67,9 +67,9 @@ public class Product {
 
     public void setDoorCount(Integer doorCount) {this.doorCount = doorCount;}
 
-    public BigDecimal getPrice() {return price;}
+    public Double getPrice() {return price;}
 
-    public void setPrice(BigDecimal price) {this.price = price;}
+    public void setPrice(Double price) {this.price = price;}
 
     public Type getType() {return type;}
 
