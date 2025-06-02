@@ -124,4 +124,14 @@ public class AdminController {
 
         return "redirect:/admin";
     }
+    @PostMapping("/product/delete")
+    @Transactional
+    public String deleteProduct(@RequestParam Integer productId, RedirectAttributes redirectAttributes) {
+
+        prodRepository.deleteById(productId);
+
+        redirectAttributes.addFlashAttribute("message", "Product added successfully!");
+
+        return "redirect:/admin";
+    }
 }

@@ -200,7 +200,10 @@
                         <td class="price-cell" th:text="${'€' + #numbers.formatDecimal(product.price, 1, 'POINT', 2, 'COMMA')}"></td>
                         <td class="action-buttons">
                             <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
+                            <form th:action="@{/admin/product/delete}" method="post">
+                                <input type="hidden" name="productId" th:value="${product.productId}">
+                                <button type="submit" class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
+                            </form>
                         </td>
                     </tr>
                     </tbody>
