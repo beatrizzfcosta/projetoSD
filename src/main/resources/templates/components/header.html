@@ -22,7 +22,13 @@
             <ul class="dropdown-menu">
                 <li><a href="/perfil">Perfil</a></li>
                 <li><a href="/historico">Histórico</a></li>
-                <li><a href="/logout" method="post" >Sair</a></li>
+                <li>
+                    <form th:action="@{/logout}" method="post" >
+                        <a type="submit" class="logout-btn">
+                            <span>Sair</span>
+                        </a>
+                    </form>
+                </li>
             </ul>
         </li>
         <!-- Menu para usuários não autenticados -->

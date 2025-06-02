@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.math.BigDecimal;
+import java.time.Month;
 import java.time.format.TextStyle;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -125,18 +126,19 @@ public class AdminController {
         model.addAttribute("totalIVA", totalSales * 0.23);
         model.addAttribute("totalcIVA", totalSales * 1.23);
 
-        Map<String, Double> salesByMonth = new TreeMap<>();
+        Map<Month, Double> salesByMonth = new TreeMap<>();
 
         for (Purchase purchase : purchases) {
-            String month = purchase.getDate().getMonth().getDisplayName(TextStyle.SHORT, Locale.forLanguageTag("pt")).toUpperCase();
+            Month month = purchase.getDate().getMonth(); //
 
             double totalPurchase = 0.0;
             for (PurchaseProduct pp : purchase.getPurchaseProducts()) {
-                totalPurchase += pp.getProduct().getPrice() * pp.getQuantity() * 1.23; // com IVA
+                totalPurchase += pp.getProduct().getPrice() * pp.getQuantity() * 1.23;
             }
 
             salesByMonth.merge(month, totalPurchase, Double::sum);
         }
+
 
         model.addAttribute("salesByMonth", salesByMonth);
 

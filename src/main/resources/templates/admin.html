@@ -60,7 +60,7 @@
                 </div>
                 <div class="stat-card">
                     <h3>Carros em Estoque</h3>
-                    <div class="value" th:text="${stockCount}"</div>
+                    <div> class="value" th:text="${stockCount}" </div>
                 </div>
             </div>
         </section>
@@ -146,7 +146,7 @@
                         <a th:href="@{/admin}" class="clear-link">Limpar Filtros</a>
                     </div>
                     <button type="submit" class="btn btn-primary">Filtrar</button>
-                    
+
                 </div>
             </form>
             <div class="table-container">
@@ -275,11 +275,11 @@
         </section>
 
         <!-- Gráficos Section -->
-        <section id="graficos" class="section">
+        <section id="graficos" class="section-chart">
             <h2>Gráficos Mensais</h2>
             <div class="bar-chart">
                 <div th:each="entry : ${salesByMonth}">
-                    <div class="bar" th:style="'height:' + ${entry.value / 1000} + 'px'"
+                    <div class="bar" th:style="'height:' + ${entry.value / 4000} + 'px'"
                          th:title="${'€ ' + #numbers.formatDecimal(entry.value, 1, 'POINT', 2, 'COMMA')}">
                         <span th:text="${#numbers.formatDecimal(entry.value, 1, 'POINT', 0, 'COMMA')}"></span>
                     </div>

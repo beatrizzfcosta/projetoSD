@@ -38,7 +38,7 @@
                 </div>
                 <div class="form-group">
                     <i class="fas fa-id-card"></i>
-                    <input type="text" th:field="*{nif}" pattern="^\d{9}$" placeholder="NIF (opcional)" />
+                    <input type="text" th:field="*{nif}" pattern="^\d{9}$" placeholder="NIF (opcional) - Exemplo: 123456789" />
                 </div>
                 <div class="form-group">
                     <i class="fas fa-home"></i>
@@ -46,7 +46,7 @@
                 </div>
                 <div class="form-group">
                     <i class="fas fa-map-marker-alt"></i>
-                    <input type="text" th:field="*{codigoPostal}" pattern="^\d{4}-\d{3}$" placeholder="Código Postal (opcional)" />
+                    <input type="text" th:field="*{codigoPostal}" pattern="^\d{4}-\d{3}$" placeholder="Código Postal (opcional) - Exemplo: 1234-567" />
                 </div>
                 <div class="form-group">
                     <i class="fas fa-globe"></i>
@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-group">
                     <i class="fas fa-phone"></i>
-                    <input type="text" th:field="*{telefone}" pattern="^(\+351)?\s?\d{9}$" placeholder="Telefone (opcional)" />
+                    <input type="text" th:field="*{telefone}" pattern="^(\+351)?\s?\d{9}$" placeholder="Telefone (opcional) - Exemplo: 912345678" />
                 </div>
                 <button type="submit" class="submit-btn">Criar conta</button>
             </form>
