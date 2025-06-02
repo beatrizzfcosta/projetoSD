@@ -34,6 +34,8 @@ public class AdminController {
 
     @Autowired
     private BrandRepository brandRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
     @GetMapping
     public String getAll(Model model,
@@ -134,5 +136,33 @@ public class AdminController {
         redirectAttributes.addFlashAttribute("message", "Product added successfully!");
 
         return "redirect:/admin";
+    }
+
+    @PostMapping("/product/edit")
+    @Transactional
+    public String editProduct(@RequestParam Integer productId, @ModelAttribute ProductFormDTO productForm, RedirectAttributes redirectAttributes) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not Found"));
+
+        System.out.println(">>> EDITANDO PRODUTO ID: " + productId);
+        System.out.println(">>> Nome: " + productForm.getName());
+        System.out.println(">>> Preço: " + productForm.getPrice());
+
+        product.setName(productForm.getName());
+        product.setDescription(productForm.getDescription());
+        product.setImageURL(productForm.getImageURL());
+        product.setDoorCount(productForm.getDoorCount());
+        product.setPrice(productForm.getPrice());
+
+        typeRepository.findById(productForm.getTypeId()).ifPresent(product::setType);
+        colorRepository.findById(productForm.getColorId()).ifPresent(product::setColor);
+        brandRepository.findById(productForm.getBrandId()).ifPresent(product::setBrand);
+
+        productRepository.save(product);
+
+        redirectAttributes.addFlashAttribute("message", "Product edited successfully!");
+
+        return "redirect:/admin";
+
     }
 }
