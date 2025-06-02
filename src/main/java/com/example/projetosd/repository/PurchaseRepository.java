@@ -29,4 +29,6 @@ public interface PurchaseRepository extends CrudRepository<Purchase, Integer> {
     """, nativeQuery = true)
     List<InvoiceItemRepository> findInvoiceDataByPurchaseId(@Param("purchaseId") Integer purchaseId);
 
+    List<Purchase> findByUserUserId(Integer userId);
+
 }

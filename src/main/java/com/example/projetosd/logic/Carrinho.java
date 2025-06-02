@@ -14,11 +14,9 @@ public class Carrinho {
         this.products = new HashMap<>();
     }
 
-
     public synchronized void addProduct(Integer prodId) {
         products.put(prodId, products.getOrDefault(prodId, 0) + 1);
     }
-
 
     public synchronized void incrementProduct(Integer prodId) {
         if (products.containsKey(prodId)) {
@@ -27,7 +25,6 @@ public class Carrinho {
             products.put(prodId, 1);
         }
     }
-
 
     public synchronized void decrementProduct(Integer prodId) {
         if (products.containsKey(prodId)) {
@@ -39,7 +36,6 @@ public class Carrinho {
             }
         }
     }
-
 
     public synchronized void removeProduct(Integer prodId) {
         products.remove(prodId);
