@@ -24,7 +24,7 @@ public class SecurityConfig {
                         .requestMatchers("/perfil")   .hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/historico").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/carrinho") .hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/loja")     .hasRole("USER")
+                        .requestMatchers("/loja")     .hasAnyRole("USER", "ADMIN")
                         .anyRequest().permitAll()
             )
             .formLogin(form -> form
