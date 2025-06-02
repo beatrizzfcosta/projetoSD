@@ -48,19 +48,19 @@
             <div class="stats-cards">
                 <div class="stat-card">
                     <h3>Total de Vendas</h3>
-                    <div class="value">€ 1.250.000</div>
+                    <div class="value" th:text="${'€ ' + #numbers.formatDecimal(totalSales, 1, 'POINT', 2, 'COMMA')}"></div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total de IVA</h3>
+                    <div class="value" th:text="${'€ ' + #numbers.formatDecimal(totalIVA, 1, 'POINT', 2, 'COMMA')}"></div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total com IVA</h3>
+                    <div class="value" th:text="${'€ ' + #numbers.formatDecimal(totalcIVA, 1, 'POINT', 2, 'COMMA')}"></div>
                 </div>
                 <div class="stat-card">
                     <h3>Carros em Estoque</h3>
-                    <div class="value">24</div>
-                </div>
-                <div class="stat-card">
-                    <h3>Usuários Ativos</h3>
-                    <div class="value">156</div>
-                </div>
-                <div class="stat-card">
-                    <h3>Pedidos Pendentes</h3>
-                    <div class="value">8</div>
+                    <div class="value" th:text="${stockCount}"</div>
                 </div>
             </div>
         </section>
@@ -68,29 +68,6 @@
         <!-- Carros Comprados Section -->
         <section id="carros-comprados" class="section">
             <h2>Carros Comprados</h2>
-            <div class="filters">
-                <div class="filter-group">
-                    <label>Data de Compra</label>
-                    <input type="date">
-                </div>
-                <div class="filter-group">
-                    <label>Valor</label>
-                    <select>
-                        <option value="">Todos</option>
-                        <option value="0-50000">Até €50.000</option>
-                        <option value="50000-100000">€50.000 - €100.000</option>
-                        <option value="100000+">Acima de €100.000</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label>Nome do Carro</label>
-                    <input type="text" placeholder="Pesquisar...">
-                </div>
-                <div class="filter-group">
-                    <label>Nome do Cliente</label>
-                    <input type="text" placeholder="Pesquisar cliente...">
-                </div>
-            </div>
             <div class="table-container">
                 <table class="data-table">
                     <thead>
@@ -104,21 +81,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="id-cell">#001</td>
-                        <td>Porsche 911</td>
-                        <td>15/03/2024</td>
-                        <td class="price-cell">€230.000</td>
-                        <td>João Silva</td>
-                        <td><span class="status-badge status-completed">Entregue</span></td>
-                    </tr>
-                    <tr>
-                        <td class="id-cell">#002</td>
-                        <td>BMW M3</td>
-                        <td>10/03/2024</td>
-                        <td class="price-cell">€180.000</td>
-                        <td>Maria Santos</td>
-                        <td><span class="status-badge status-pending">Em Processamento</span></td>
+                    <tr th:each="purchase : ${ListPurchases}">
+                        <td class="id-cell" th:text="${'#' + purchase.purchaseId}"></td>
+                        <td th:each="purchaseProduct : ${purchase.purchaseProducts}" th:text="${purchaseProduct.product.name}"></td>
+                        <td th:text="${#temporals.format(purchase.date, 'dd/MM/yyyy')}"></td>
+                        <td class="price-cell" th:each="purchaseProduct : ${purchase.purchaseProducts}"
+                            th:text="${'€' + #numbers.formatDecimal(purchaseProduct.product.price * 1.23, 1, 'POINT', 2, 'COMMA')}"></td>
+                        <td th:text="${purchase.user.nome}"></td>
+                        <td><span class="status-badge status-success">Pago</span></td>
                     </tr>
                     </tbody>
                 </table>
@@ -307,8 +277,14 @@
         <!-- Gráficos Section -->
         <section id="graficos" class="section">
             <h2>Gráficos Mensais</h2>
-            <div class="chart-container">
-                <canvas id="salesChart"></canvas>
+            <div class="bar-chart">
+                <div th:each="entry : ${salesByMonth}">
+                    <div class="bar" th:style="'height:' + ${entry.value / 1000} + 'px'"
+                         th:title="${'€ ' + #numbers.formatDecimal(entry.value, 1, 'POINT', 2, 'COMMA')}">
+                        <span th:text="${#numbers.formatDecimal(entry.value, 1, 'POINT', 0, 'COMMA')}"></span>
+                    </div>
+                    <div class="bar-label" th:text="${entry.key}"></div>
+                </div>
             </div>
         </section>
     </main>
@@ -396,31 +372,6 @@
 </div>
 
 <script>
-    // Initialize charts
-    document.addEventListener('DOMContentLoaded', function() {
-        const ctx = document.getElementById('salesChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-                datasets: [{
-                    label: 'Vendas Mensais',
-                    data: [12, 19, 15, 25, 22, 30],
-                    borderColor: '#007bff',
-                    tension: 0.1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false
-            }
-        });
-
-        // Show all sections initially
-        document.querySelectorAll('.section').forEach(section => {
-            section.style.display = 'block';
-        });
-    });
 
     // Improved sidebar toggle functionality
     document.addEventListener('DOMContentLoaded', function() {
@@ -519,6 +470,36 @@
         }
     });
 
+    const ctx = document.getElementById('salesChart').getContext('2d');
+
+    const salesMonths = /*[[${salesMonths}]]*/ [];
+    const salesValues = /*[[${salesValues}]]*/ [];
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: salesMonths,
+            datasets: [{
+                label: 'Total de Vendas com IVA (€)',
+                data: salesValues,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return '€ ' + value.toLocaleString('pt-PT', { minimumFractionDigits: 2 });
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+
     /*
     // Form submission
     document.getElementById('novoCarroForm').addEventListener('submit', function(e) {
@@ -568,6 +549,9 @@
             modal.style.display='none';
         }
     }
+
+
+
 </script>
 
 </body>

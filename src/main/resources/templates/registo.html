@@ -26,19 +26,19 @@
                 </div>
                 <div class="form-group">
                     <i class="fas fa-envelope"></i>
-                    <input type="email" th:field="*{mail}" placeholder="Email" required />
+                    <input type="email" th:field="*{mail}" pattern="^[\w\.-]+@[\w\.-]+\.\w{2,}$" placeholder="Email" required />
                 </div>
                 <div class="form-group">
                     <i class="fas fa-lock"></i>
-                    <input type="password" th:field="*{password}" placeholder="Senha" required />
+                    <input type="password" th:field="*{password}" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{6,}$" placeholder="Senha" required />
                 </div>
                 <div class="form-group">
                     <i class="fas fa-lock"></i>
-                    <input type="password" th:field="*{confirmarPassword}" placeholder="Confirmar senha" required />
+                    <input type="password" th:field="*{confirmarPassword}" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{6,}$" placeholder="Confirmar senha" required />
                 </div>
                 <div class="form-group">
                     <i class="fas fa-id-card"></i>
-                    <input type="text" th:field="*{nif}" placeholder="NIF (opcional)" />
+                    <input type="text" th:field="*{nif}" pattern="^\d{9}$" placeholder="NIF (opcional)" />
                 </div>
                 <div class="form-group">
                     <i class="fas fa-home"></i>
@@ -46,7 +46,7 @@
                 </div>
                 <div class="form-group">
                     <i class="fas fa-map-marker-alt"></i>
-                    <input type="text" th:field="*{codigoPostal}" placeholder="Código Postal (opcional)" />
+                    <input type="text" th:field="*{codigoPostal}" pattern="^\d{4}-\d{3}$" placeholder="Código Postal (opcional)" />
                 </div>
                 <div class="form-group">
                     <i class="fas fa-globe"></i>
@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-group">
                     <i class="fas fa-phone"></i>
-                    <input type="text" th:field="*{telefone}" placeholder="Telefone (opcional)" />
+                    <input type="text" th:field="*{telefone}" pattern="^(\+351)?\s?\d{9}$" placeholder="Telefone (opcional)" />
                 </div>
                 <button type="submit" class="submit-btn">Criar conta</button>
             </form>

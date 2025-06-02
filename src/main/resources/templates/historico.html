@@ -19,20 +19,6 @@
         <h2>Meu Histórico</h2>
     </div>
 
-    <div class="history-filters">
-        <select class="filter-select">
-            <option value="">Todos os Status</option>
-            <option value="completed">Concluídos</option>
-            <option value="pending">Pendentes</option>
-        </select>
-        <select class="filter-select">
-            <option value="">Todos os Anos</option>
-            <option value="2024">2024</option>
-            <option value="2023">2023</option>
-            <option value="2022">2022</option>
-        </select>
-    </div>
-
     <div class="history-list">
         <div th:each="purchase : ${purchases}" class="history-item">
             <div class="history-item-header">
@@ -42,7 +28,7 @@
             </div>
         </div>
     </div>
-
+</div>
 <!-- Footer -->
 <div th:replace="components/footer :: footer"></div>
 
