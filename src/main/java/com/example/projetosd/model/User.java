@@ -26,7 +26,7 @@ public class User {
     private String mail;
 
     @Transient
-    private String senha;
+    private String confirmarPassword;
 
     @Column(name = "nif", unique = true)
     private String nif;
@@ -43,8 +43,6 @@ public class User {
     @Column(name = "telefone")
     private String telefone;
 
-    @Transient
-    private String confirmarSenha;
 
     public User() {}
 
@@ -88,22 +86,9 @@ public class User {
         this.mail = mail;
     }
 
-    public String getSenha() {
-        return senha;
-    }
+    public String getConfirmarPassword() {return confirmarPassword;}
 
-    public void setSenha(String senha) {
-
-        this.senha = senha;
-    }
-
-    public String getConfirmarSenha() {
-        return confirmarSenha;
-    }
-
-    public void setConfirmarSenha(String confirmarSenha) {
-        this.confirmarSenha = confirmarSenha;
-    }
+    public void setConfirmarPassword(String confirmarPassword) {this.confirmarPassword = confirmarPassword;}
 
     public String getNif() {
         return nif;

@@ -62,13 +62,13 @@ public class PerfilController {
             currentUser.setTelefone(updatedUser.getTelefone());
 
             // Update password if provided
-            if (updatedUser.getSenha() != null && !updatedUser.getSenha().isEmpty()) {
-                if (!updatedUser.getSenha().equals(updatedUser.getConfirmarSenha())) {
+            if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
+                if (!updatedUser.getPassword().equals(updatedUser.getConfirmarPassword())) {
                     Map<String, String> response = new HashMap<>();
                     response.put("error", "As senhas não coincidem.");
                     return ResponseEntity.badRequest().body(response);
                 }
-                currentUser.setSenha(updatedUser.getSenha());
+                currentUser.setPassword(updatedUser.getPassword());
             }
 
             // Save the updated user

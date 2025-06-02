@@ -40,18 +40,17 @@ public class RegistoController {
             }
 
             // Verificar se as senhas coincidem
-            if (!user.getSenha().equals(user.getConfirmarSenha())) {
+            if (!user.getPassword().equals(user.getConfirmarPassword())) {
                 model.addAttribute("erro", "As senhas não coincidem.");
                 return "registo";
             }
 
             // Verificar se a senha tem pelo menos 6 caracteres
-            if (user.getSenha().length() < 6) {
+            if (user.getPassword().length() < 6) {
                 model.addAttribute("erro", "A senha deve ter pelo menos 6 caracteres.");
                 return "registo";
             }
 
-            user.setSenha(user.getSenha());
 
             // Salvar o usuário
             userRepository.save(user);
