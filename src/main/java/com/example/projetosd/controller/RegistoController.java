@@ -1,8 +1,11 @@
 package com.example.projetosd.controller;
 
+import com.example.projetosd.model.Role;
 import com.example.projetosd.model.User;
+import com.example.projetosd.repository.RoleRepository;
 import com.example.projetosd.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +19,12 @@ public class RegistoController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @GetMapping
     public String showRegistrationForm(Model model) {
@@ -52,7 +61,10 @@ public class RegistoController {
             }
 
 
-            // Salvar o usuário
+            Role userRole = roleRepository.findByNome("USER");
+
+            user.setRole(userRole);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
             
             model.addAttribute("sucesso", "Conta criada com sucesso!");
